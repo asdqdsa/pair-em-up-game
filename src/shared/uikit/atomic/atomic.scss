@@ -1,0 +1,121 @@
+@use '../core/utils' as *;
+@use './mixins' as *;
+
+.flex {
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.mx-auto {
+  margin: 0 auto;
+}
+
+.w-full {
+  width: 400px;
+}
+
+.w-xl4 {
+  width: 380px;
+}
+
+.w-xl3 {
+  width: 360px;
+}
+
+.w-xl2 {
+  width: 340px;
+}
+
+.w-xl {
+  width: 320px;
+}
+
+.w-lg {
+  width: 300px;
+}
+
+.w-md {
+  width: 280px;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.rounded {
+  border-radius: 4px;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.border {
+  border: 1px solid #ccc;
+}
+
+.hidden {
+  display: none;
+}
+
+.select-none {
+  user-select: none;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: start;
+}
+
+@for $i from 0 to 20 {
+  .gap-#{$i} {
+    gap: rx($i);
+  }
+}
+
+.sr-only {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  block-size: 1px;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  white-space: nowrap;
+}
+
+@include generate-spacing-tokens('p', 'padding', 99);
+@include generate-spacing-tokens('m', 'margin', 99);

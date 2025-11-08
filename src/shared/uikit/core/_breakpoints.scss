@@ -1,0 +1,21 @@
+@use 'sass:map';
+@use './utils' as *;
+
+$breakpoints: (
+  xs: rx(380),
+  sm: rx(640),
+  ml: rx(766),
+  md: rx(768),
+  lg: rx(1024),
+  xl: rx(1280),
+  bg: rx(1439),
+  '2xl': rx(1536),
+);
+
+@mixin screen($label) {
+  $val: map.get($breakpoints, $label);
+
+  @media screen and (width <= $val) {
+    @content;
+  }
+}

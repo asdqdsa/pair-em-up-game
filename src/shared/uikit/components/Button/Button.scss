@@ -1,0 +1,24 @@
+@use '../../theme' as *;
+@use '../../core' as *;
+@use './mixins' as *;
+@use './tokens' as *;
+
+.btn {
+  @include button;
+}
+
+.btn-md {
+  @include button($button-width-md);
+
+  @include screen(md) {
+    inline-size: rx(200);
+  }
+
+  @include screen(sm) {
+    inline-size: 100%;
+  }
+}
+
+.btn-lg {
+  @include button($button-width-lg);
+}

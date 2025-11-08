@@ -1,0 +1,9 @@
+@use '@/shared/uikit/core' as *;
+@use '@/shared/uikit/' as *;
+
+.page {
+  @include page-container($max-container-width: 1440, $top: 0, $bot: 0);
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}

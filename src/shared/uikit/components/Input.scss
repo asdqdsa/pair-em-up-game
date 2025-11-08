@@ -1,0 +1,50 @@
+@use '../theme' as *;
+@use '../core' as *;
+
+$input-inline-size: clamp(16rem, 7.143rem + 18.452vi, 23.75rem);
+
+.input {
+  padding: rx(18) rx(12);
+  border: solid rx(1) $color-outline;
+  block-size: rx(60);
+  inline-size: $input-inline-size;
+  max-inline-size: rx(380);
+  min-inline-size: rx(30);
+  /* text-align: center; */
+  outline: none;
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease;
+  background-color: $color-input-bg;
+  color: $color-input-fg;
+
+  &:focus {
+    border-color: $color-outline;
+  }
+
+  @include hover {
+    border-color: $color-outline-hover;
+  }
+
+  &::placeholder {
+    color: $color-placeholder;
+  }
+
+  @include screen(ml) {
+    max-inline-size: unset;
+  }
+
+  @include screen(md) {
+    inline-size: 100%;
+  }
+}
+
+.keybind-input-hidden {
+  display: none;
+  /* visibility: hidden; */
+}
+
+.keybind-input-shown {
+  display: block;
+  /* visibility: visible; */
+}

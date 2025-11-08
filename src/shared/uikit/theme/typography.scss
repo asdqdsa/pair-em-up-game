@@ -1,0 +1,42 @@
+@use 'sass:map';
+@use './tokens' as *;
+@use './mixins' as *;
+@use '../core/breakpoints' as *;
+
+@each $variant, $props in $typography-tokens {
+  $family: if(
+    map.has-key($props, family),
+    map.get($props, family),
+    $font-family-secondary
+  );
+
+  $transform: if(
+    map.has-key($props, transform),
+    map.get($props, transform),
+    none
+  );
+
+  $italic: if(
+    map.has-key($props, italic),
+    map.get($props, italic),
+    $not-italic
+  );
+
+  .ty-#{$variant} {
+    @include text-base(
+      $family,
+      map.get($props, size),
+      map.get($props, weight),
+      map.get($props, leading),
+      map.get($props, tracking),
+      $transform,
+      $italic
+    );
+  }
+}
+
+.ty-h1-d {
+  @include screen(sm) {
+    font-size: clamp(3.5rem, 2.765rem + 3.093vi, 4.25rem);
+  }
+}

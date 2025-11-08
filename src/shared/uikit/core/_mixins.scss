@@ -1,0 +1,107 @@
+@use '../theme' as *;
+@use './tokens' as *;
+@use './utils' as *;
+
+@mixin active() {
+  &.active {
+    @content;
+  }
+}
+
+@mixin hover() {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+@mixin touch() {
+  @media (hover: none) and (pointer: coarse) {
+    @content;
+  }
+}
+
+@mixin icon($size) {
+  display: inline-block;
+  width: $size;
+  height: $size;
+  padding: 0;
+  font-size: $size;
+}
+
+@mixin page-container(
+  $max-container-width: $defaultPageWidth,
+  $top: $defaultPadding,
+  $bot: $defaultPadding
+) {
+  padding: $top $bot;
+  margin: 0 auto;
+  inline-size: 100%;
+  max-inline-size: rx($max-container-width);
+}
+
+@mixin container(
+  $max-container-width: 100%,
+  $top: 0,
+  $bot: 0,
+  $left: 0,
+  $right: 0
+) {
+  padding: rx($top) rx($right) rx($bot) rx($left);
+  inline-size: 100%;
+  max-inline-size: rx($max-container-width);
+}
+
+@mixin flex($gap: 0, $direction: column) {
+  display: flex;
+  flex-direction: $direction;
+  gap: rx($gap);
+}
+
+@mixin grid($min, $gap) {
+  display: grid;
+  gap: $gap;
+  grid-template-columns: repeat(auto-fill, minmax($min, 1fr));
+}
+
+@mixin list() {
+  display: flex;
+  flex-direction: row;
+}
+
+@mixin selectable($hover) {
+  /* position: relative; */
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition: color 0.3s ease;
+
+  @include hover {
+    color: $hover;
+  }
+}
+
+@mixin visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  block-size: 1px;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  white-space: nowrap;
+}
+
+@mixin section($type: 'default') {
+  max-inline-size: 100%;
+  @if $type == 'hero' {
+    padding: 0 rx(20) 0 0;
+  } @else {
+    padding: rx(60) rx(20);
+  }
+}

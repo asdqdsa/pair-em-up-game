@@ -1,0 +1,9 @@
+@use '../theme' as *;
+@use '../core' as *;
+
+.footer {
+  align-items: center;
+  justify-content: center;
+  min-height: rx(20);
+  @include flex($direction: row);
+}

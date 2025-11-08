@@ -1,0 +1,24 @@
+@mixin text-base(
+  $family,
+  $size,
+  $weight,
+  $leading,
+  $tracking,
+  $transform,
+  $italic
+) {
+  font-family: $family;
+  font-size: $size;
+  font-style: $italic;
+  font-weight: $weight;
+  letter-spacing: $tracking;
+  line-height: $leading;
+  text-transform: $transform;
+}
+
+@mixin selection($bg, $fg) {
+  &::selection {
+    background: $bg;
+    color: $fg;
+  }
+}

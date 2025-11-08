@@ -1,0 +1,18 @@
+@use 'sass:math';
+
+@function rx($val, $base: 16) {
+  @if math.unit($val) == '%' {
+    @return $val;
+  }
+
+  @if math.unit($val) == 'px' {
+    $num: math.div($val, 1px);
+    @return math.div($num, $base) * 1rem;
+  }
+
+  @if math.unit($val) == 'rem' {
+    @return $val;
+  }
+
+  @return math.div($val, $base) * 1rem;
+}

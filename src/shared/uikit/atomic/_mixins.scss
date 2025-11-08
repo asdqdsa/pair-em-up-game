@@ -1,0 +1,35 @@
+@use '../core/utils' as *;
+
+@mixin generate-spacing-tokens($prefix, $prop, $to) {
+  @for $i from 0 to $to {
+    .#{$prefix}-#{$i} {
+      #{$prop}: rx($i);
+    }
+
+    .#{$prefix}t-#{$i} {
+      #{$prop}-top: rx($i);
+    }
+
+    .#{$prefix}r-#{$i} {
+      #{$prop}-right: rx($i);
+    }
+
+    .#{$prefix}b-#{$i} {
+      #{$prop}-bottom: rx($i);
+    }
+
+    .#{$prefix}l-#{$i} {
+      #{$prop}-left: rx($i);
+    }
+
+    .#{$prefix}x-#{$i} {
+      #{$prop}-left: rx($i);
+      #{$prop}-right: rx($i);
+    }
+
+    .#{$prefix}y-#{$i} {
+      #{$prop}-top: rx($i);
+      #{$prop}-bottom: rx($i);
+    }
+  }
+}

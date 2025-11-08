@@ -1,0 +1,13 @@
+@use '../theme' as *;
+@use '../core' as *;
+
+.keybind-edit-btn {
+  background-color: transparent;
+  font-size: rx(14);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    color: $color-outline-hover;
+  }
+}
