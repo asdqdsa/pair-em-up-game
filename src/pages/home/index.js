@@ -38,3 +38,7 @@ mount(Title, app);
 mount(Main, app);
 mount(ThemeButton({ events }), app);
 mount(Footer, app);
+
+events.all(({ event, detail }) => {
+  console.log('*', event, detail);
+});
