@@ -7,6 +7,7 @@ export function App({ events }) {
   const header = Header({ events });
   const footer = Footer({ events });
   const main = Main({ events });
+
   const app = createElement(
     'div',
     {

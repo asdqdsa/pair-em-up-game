@@ -1,5 +1,6 @@
 import { createElement } from '@/shared/dom/create-element';
 import { EVENTS } from '@/shared/event/events';
+import { UIButton } from '@/shared/uikit/components/UIButton';
 
 import { UI_COMMANDS } from './constants';
 
@@ -7,12 +8,19 @@ export function StartScreen({ events }) {
   return createElement(
     'div',
     { className: 'flex flex-col gap-2 justify-center h-full' },
-    StartScreenGameMenu({ events }),
-    StartScreenControlls({ events })
+    StartScreenGameModes({ events }),
+    StartScreenControlls({ events }),
+    UIButton({
+      key: `btn-${UI_COMMANDS.STATS.label.toLowerCase()}`,
+      className: 'btn flex flex-col items-center justify-center',
+      onClick: () =>
+        events.emit(EVENTS.UI_MENU_ACTION, UI_COMMANDS.STATS.action),
+      children: UI_COMMANDS.STATS.label,
+    })
   );
 }
 
-export function StartScreenGameMenu({ events }) {
+export function StartScreenGameModes({ events }) {
   return createElement(
     'div',
     { className: 'flex flex-col gap-2 justify-center' },
