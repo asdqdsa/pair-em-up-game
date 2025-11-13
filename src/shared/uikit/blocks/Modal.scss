@@ -1,0 +1,67 @@
+@use '../theme' as *;
+@use '../core' as *;
+
+.modal {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inset: 0;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+
+  &__signup {
+    align-items: unset;
+    gap: rx(12);
+  }
+
+  &__signup-header {
+    text-align: center;
+  }
+
+  &__signup-form {
+    flex-direction: column;
+  }
+
+  &__signup-input {
+    inline-size: 100%;
+  }
+
+  &__backdrop {
+    position: absolute;
+    background-color: $color-overlay;
+    /* background-color: gray; */
+    inset: 0;
+  }
+
+  &__icon-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1.1rem;
+  }
+
+  &__icon {
+    block-size: rx(24);
+    @include hover {
+      color: $color-primary;
+      cursor: pointer;
+    }
+  }
+
+  &__content {
+    @include flex;
+    position: absolute;
+    justify-content: center;
+    background-color: $color-sf-secondary;
+    color: $color-on-sf-primary;
+    margin-inline: rx(20);
+    max-inline-size: rx(500);
+    padding-block: rx(60);
+    padding-inline: clamp(1.25rem, 0.354rem + 3.774vi, 3.75rem);
+  }
+}
+
+.modal-active {
+  @include flex;
+}
