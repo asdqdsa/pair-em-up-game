@@ -1,7 +1,7 @@
 import { GAME_MODES } from '@/features/game/constants';
 
 export const UI_COMMANDS = {
-  TITLE: 'Pair Up Game',
+  TITLE: 'Pair Em Up',
   TIP: 'Select game mode',
   STATS: { label: 'Results', action: { type: 'stats' } },
 
@@ -16,7 +16,8 @@ export const UI_COMMANDS = {
   },
 
   BACK_TO_MENU: {
-    label: 'Main Menu',
+    label: 'Back',
+    title: 'Go back',
     action: { type: 'back-to-menu' },
   },
 
