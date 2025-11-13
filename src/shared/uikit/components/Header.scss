@@ -2,8 +2,9 @@
 @use '../core' as *;
 
 .header {
-  align-items: center;
-  justify-content: center;
+  /* align-items: center; */
+  /* justify-content: center; */
   min-height: rx(20);
+  min-width: 100%;
   @include flex($direction: row);
 }

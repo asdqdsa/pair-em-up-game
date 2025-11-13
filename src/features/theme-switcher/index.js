@@ -2,7 +2,7 @@ import { createElement } from '@/shared/dom/create-element';
 
 import { loadThemeState } from './state';
 
-export function ThemeButton({ events }) {
+export function ThemeButton({ events, className }) {
   let { activeTheme } = loadThemeState();
 
   events.on('theme:changed', ({ detail }) => {
@@ -12,7 +12,7 @@ export function ThemeButton({ events }) {
   const el = createElement(
     'button',
     {
-      className: 'btn',
+      className: `${className}`,
       onClick: () => events.emit('theme:next'),
     },
     `${activeTheme}`

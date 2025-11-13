@@ -25,6 +25,10 @@
   justify-content: center;
 }
 
+.justify-end {
+  justify-content: flex-end;
+}
+
 .mx-auto {
   margin: 0 auto;
 }
@@ -69,6 +73,10 @@
   border-radius: 9999px;
 }
 
+.square {
+  aspect-ratio: 1 / 1;
+}
+
 .border {
   border: 1px solid #ccc;
 }
@@ -95,6 +103,10 @@
 
 .text-left {
   text-align: start;
+}
+
+.text-right {
+  text-align: end;
 }
 
 @for $i from 0 to 20 {

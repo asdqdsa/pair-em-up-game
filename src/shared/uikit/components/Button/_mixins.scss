@@ -16,9 +16,9 @@
   block-size: $block;
   color: $fg;
   cursor: pointer;
-  /* inline-size: $inline; */
+  inline-size: $inline;
   line-height: $block;
-  min-inline-size: rx(200);
+  /* min-inline-size: rx(200); */
   padding-inline: rx(10);
   text-align: center;
   transition:
