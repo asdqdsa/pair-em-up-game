@@ -4,7 +4,7 @@ import { UIButton } from '@/shared/uikit/components/UIButton';
 
 import { UI_COMMANDS } from '../start/constants';
 
-export function SettingsScreen({ events, onClose = () => {} }) {
+export function SettingsScreen({ events }) {
   const el = createElement(
     'div',
     {

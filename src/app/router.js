@@ -1,8 +1,7 @@
 import { GameScreen } from '@/pages/home/game/game-screen';
 import { StartScreen } from '@/pages/home/start/start-screen';
 import { SettingsScreen } from '@/pages/home/settings/SettingsScreen';
-import { createElement } from '@/shared/dom/create-element';
-import { mount, render } from '@/shared/dom/render';
+import { render } from '@/shared/dom/render';
 import { EVENTS } from '@/shared/event/events';
 import { ModalUI } from '@/shared/uikit/components/ModalUI';
 import { StatsScreen } from '@/pages/home/stats/StatsScreen';
