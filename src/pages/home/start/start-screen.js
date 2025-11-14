@@ -3,9 +3,10 @@ import { APP_EVENTS } from '@/shared/event/events';
 import { UIButton } from '@/shared/uikit/components/UIButton';
 
 import { MENU_ACTIONS } from './menu-actions';
-import { MENU_TEXT } from './menu-text';
+import { getMenuText } from './i18n/menu-text';
 
 export function StartScreen({ events }) {
+  const MENU_TEXT = getMenuText();
   return createElement(
     'div',
     { className: 'flex flex-col gap-2 justify-center h-full' },
@@ -22,25 +23,21 @@ export function StartScreen({ events }) {
 }
 
 export function StartScreenGameModes({ events }) {
+  const MENU_TEXT = getMenuText();
   return createElement(
     'div',
     { className: 'flex flex-col gap-2 justify-center' },
-    createElement(
-      'div',
-      {
-        className: 'ty-h1',
-      },
-      MENU_TEXT.TITLE
-    ),
+    createElement('div', { className: 'ty-h1' }, MENU_TEXT.TITLE),
     ...MENU_ACTIONS.MODES.map(({ action }) => {
+      const mode = action.payload;
       return createElement(
         'div',
         {
-          'data-key': `mode-${MENU_TEXT.MODES[action.payload].toLowerCase()}`,
+          'data-key': `mode-${MENU_TEXT.MODES[mode].toLowerCase()}`,
           className: 'btn flex flex-col items-center justify-center',
           onClick: () => events.emit(APP_EVENTS.UI_MENU_ACTION, action),
         },
-        MENU_TEXT.MODES[action.payload]
+        MENU_TEXT.MODES[mode]
       );
     }),
 
@@ -55,10 +52,12 @@ export function StartScreenGameModes({ events }) {
 }
 
 export function StartScreenControlls({ events }) {
+  const MENU_TEXT = getMenuText();
+
   const continueBtn = createElement(
     'div',
     {
-      'data-key': `mode-${MENU_ACTIONS.CONTINUE.label.toLowerCase()}`,
+      'data-key': `mode-${MENU_TEXT.BUTTONS.CONTINUE.toLowerCase()}`,
       className: 'btn',
       onClick: () =>
         events.emit(APP_EVENTS.UI_MENU_ACTION, MENU_ACTIONS.CONTINUE.action),

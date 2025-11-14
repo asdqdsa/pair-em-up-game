@@ -4,6 +4,7 @@ import '@/pages/home';
 
 import '@/shared/dom/keyboard-events';
 import { initTheme } from '@/features/theme-switcher/controller';
+import { initLang } from '@/features/lang-switcher/controller';
 import { render } from '@/shared/dom/render';
 import { events } from '@/shared/event/event-broker';
 
@@ -11,4 +12,5 @@ import { App } from './layout';
 
 const root = document.querySelector('#root');
 initTheme({ root });
+initLang({ root });
 render(() => App({ events }), root);

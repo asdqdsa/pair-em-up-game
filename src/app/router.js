@@ -17,6 +17,10 @@ const DISPATCHER_TYPES = {
 export function initRouter({ events, root }) {
   render(() => StartScreen({ events }), root);
 
+  events.on(APP_EVENTS.LANG_UPDATED, ({ detail }) => {
+    render(() => StartScreen({ events }), root);
+  });
+
   events.on(APP_EVENTS.UI_MENU_ACTION, ({ detail }) => {
     const { type, payload } = detail;
     dispatcher({ type, payload, events, root });

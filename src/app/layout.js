@@ -1,4 +1,5 @@
 import { ThemeButton } from '@/features/theme-switcher';
+import { LanguageButton } from '@/features/lang-switcher';
 import { createElement } from '@/shared/dom/create-element';
 
 import { initRouter } from './router';
@@ -26,8 +27,9 @@ export function App({ events }) {
 export function Header({ events }) {
   return createElement(
     'header',
-    { className: 'header my-10 ty-body w-full flex justify-end' },
-    ThemeButton({ events, className: 'btn-md' })
+    { className: 'header my-10 ty-body w-full gap-2 flex justify-end' },
+    ThemeButton({ events, className: 'btn-md' }),
+    LanguageButton({ events, className: 'btn-md' })
   );
 }
 

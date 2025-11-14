@@ -19,4 +19,7 @@ export const APP_EVENTS = {
 
   THEME_NEXT: 'theme:next',
   THEME_UPDATED: 'theme:updated',
+
+  LANG_NEXT: 'lang:next',
+  LANG_UPDATED: 'lang:updated',
 };
