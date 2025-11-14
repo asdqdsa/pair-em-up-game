@@ -1,6 +1,6 @@
-import { GAME_MODES } from '@/features/game/constants';
+import { GAME_MODES } from '@/features/game/game-modes';
 
-export const UI_COMMANDS = {
+export const MENU_ACTIONS = {
   TITLE: 'Pair Em Up',
   TIP: 'Select game mode',
   STATS: { label: 'Results', action: { type: 'stats' } },

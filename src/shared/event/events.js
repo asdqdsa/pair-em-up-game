@@ -1,6 +1,6 @@
 // CONST EVENTS
 
-export const EVENTS = {
+export const APP_EVENTS = {
   UI_MENU_ACTION: 'ui:menu-action',
 
   UI_MODE_SELECT: 'ui:mode-select',

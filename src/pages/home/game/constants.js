@@ -1,3 +1,3 @@
-export const GRID_COMMANDS = {
+export const GRID_EVENTS = {
   CELL_CLICKED: 'cell-clicked',
 };

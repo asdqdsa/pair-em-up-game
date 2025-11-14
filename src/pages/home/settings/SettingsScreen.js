@@ -1,8 +1,8 @@
 import { createElement } from '@/shared/dom/create-element';
-import { EVENTS } from '@/shared/event/events';
+import { APP_EVENTS } from '@/shared/event/events';
 import { UIButton } from '@/shared/uikit/components/UIButton';
 
-import { UI_COMMANDS } from '../start/constants';
+import { MENU_ACTIONS } from '../start/menu-actions';
 
 export function SettingsScreen({ events }) {
   const el = createElement(
@@ -15,10 +15,13 @@ export function SettingsScreen({ events }) {
     UIButton({
       className: 'btn',
       id: 'back-to-menu-btn',
-      title: `${UI_COMMANDS.BACK_TO_MENU.title}`,
+      title: `${MENU_ACTIONS.BACK_TO_MENU.title}`,
       onClick: () =>
-        events.emit(EVENTS.UI_MENU_ACTION, UI_COMMANDS.BACK_TO_MENU.action),
-      children: `${UI_COMMANDS.BACK_TO_MENU.label}`,
+        events.emit(
+          APP_EVENTS.UI_MENU_ACTION,
+          MENU_ACTIONS.BACK_TO_MENU.action
+        ),
+      children: `${MENU_ACTIONS.BACK_TO_MENU.label}`,
     })
   );
 

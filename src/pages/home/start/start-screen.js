@@ -1,8 +1,9 @@
 import { createElement } from '@/shared/dom/create-element';
-import { EVENTS } from '@/shared/event/events';
+import { APP_EVENTS } from '@/shared/event/events';
 import { UIButton } from '@/shared/uikit/components/UIButton';
 
-import { UI_COMMANDS } from './constants';
+import { MENU_ACTIONS } from './menu-actions';
+import { MENU_TEXT } from './menu-text';
 
 export function StartScreen({ events }) {
   return createElement(
@@ -11,11 +12,11 @@ export function StartScreen({ events }) {
     StartScreenGameModes({ events }),
     StartScreenControlls({ events }),
     UIButton({
-      key: `btn-${UI_COMMANDS.STATS.label.toLowerCase()}`,
+      key: `btn-${MENU_TEXT.BUTTONS.STATS.toLowerCase()}`,
       className: 'btn flex flex-col items-center justify-center',
       onClick: () =>
-        events.emit(EVENTS.UI_MENU_ACTION, UI_COMMANDS.STATS.action),
-      children: UI_COMMANDS.STATS.label,
+        events.emit(APP_EVENTS.UI_MENU_ACTION, MENU_ACTIONS.STATS.action),
+      children: MENU_TEXT.BUTTONS.STATS,
     })
   );
 }
@@ -29,17 +30,17 @@ export function StartScreenGameModes({ events }) {
       {
         className: 'ty-h1',
       },
-      UI_COMMANDS.TITLE
+      MENU_TEXT.TITLE
     ),
-    ...UI_COMMANDS.MODES.map((entry) => {
+    ...MENU_ACTIONS.MODES.map(({ action }) => {
       return createElement(
         'div',
         {
-          'data-key': `mode-${entry.label.toLowerCase()}`,
+          'data-key': `mode-${MENU_TEXT.MODES[action.payload].toLowerCase()}`,
           className: 'btn flex flex-col items-center justify-center',
-          onClick: () => events.emit(EVENTS.UI_MENU_ACTION, entry.action),
+          onClick: () => events.emit(APP_EVENTS.UI_MENU_ACTION, action),
         },
-        entry.label
+        MENU_TEXT.MODES[action.payload]
       );
     }),
 
@@ -48,7 +49,7 @@ export function StartScreenGameModes({ events }) {
       {
         className: 'ty-body-italic text-right',
       },
-      `*${UI_COMMANDS.TIP.toLowerCase()}`
+      `*${MENU_TEXT.TIP.toLowerCase()}`
     )
   );
 }
@@ -57,24 +58,24 @@ export function StartScreenControlls({ events }) {
   const continueBtn = createElement(
     'div',
     {
-      'data-key': `mode-${UI_COMMANDS.CONTINUE.label.toLowerCase()}`,
+      'data-key': `mode-${MENU_ACTIONS.CONTINUE.label.toLowerCase()}`,
       className: 'btn',
       onClick: () =>
-        events.emit(EVENTS.UI_MENU_ACTION, UI_COMMANDS.CONTINUE.action),
+        events.emit(APP_EVENTS.UI_MENU_ACTION, MENU_ACTIONS.CONTINUE.action),
     },
 
-    `${UI_COMMANDS.CONTINUE.label}`
+    `${MENU_TEXT.BUTTONS.CONTINUE}`
   );
   const settingsBtn = createElement(
     'div',
     {
-      'data-key': `mode-${UI_COMMANDS.SETTINGS.label.toLowerCase()}`,
+      'data-key': `mode-${MENU_ACTIONS.SETTINGS.label.toLowerCase()}`,
       className: 'btn',
       onClick: () =>
-        events.emit(EVENTS.UI_MENU_ACTION, UI_COMMANDS.SETTINGS.action),
+        events.emit(APP_EVENTS.UI_MENU_ACTION, MENU_ACTIONS.SETTINGS.action),
     },
 
-    `${UI_COMMANDS.SETTINGS.label}`
+    `${MENU_TEXT.BUTTONS.SETTINGS}`
   );
 
   const el = createElement(

@@ -1,7 +1,7 @@
 import { createElement } from '@/shared/dom/create-element';
-import { EVENTS } from '@/shared/event/events';
+import { APP_EVENTS } from '@/shared/event/events';
 
-import { GRID_COMMANDS } from './constants';
+import { GRID_EVENTS } from './constants';
 
 export const getGameGrid = ({ mode = 'classic' }) => {
   const list = Array.from({ length: 27 }, (_, i) => String(i + 1));
@@ -32,7 +32,7 @@ export function GameGrid({ events }) {
       GameGridCell({
         events,
         onClick: () =>
-          events.emit(EVENTS.UI_GAME_GRID_ACTION, GRID_COMMANDS.CELL_CLICKED),
+          events.emit(APP_EVENTS.UI_GAME_GRID_ACTION, GRID_EVENTS.CELL_CLICKED),
         children: cell,
       })
     )
@@ -47,8 +47,8 @@ export function GameGridCell({ events, onClick = (e) => {}, children }) {
     {
       className: 'game-grid-cell',
       onClick: (e) => {
-        e.stopPropagation();
-        onClick(e);
+        // e.stopPropagation();
+        onClick();
       },
     },
     children

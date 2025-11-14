@@ -2,7 +2,7 @@ import { GameScreen } from '@/pages/home/game/game-screen';
 import { StartScreen } from '@/pages/home/start/start-screen';
 import { SettingsScreen } from '@/pages/home/settings/SettingsScreen';
 import { render } from '@/shared/dom/render';
-import { EVENTS } from '@/shared/event/events';
+import { APP_EVENTS } from '@/shared/event/events';
 import { ModalUI } from '@/shared/uikit/components/ModalUI';
 import { StatsScreen } from '@/pages/home/stats/StatsScreen';
 
@@ -17,7 +17,7 @@ const DISPATCHER_TYPES = {
 export function initRouter({ events, root }) {
   render(() => StartScreen({ events }), root);
 
-  events.on(EVENTS.UI_MENU_ACTION, ({ detail }) => {
+  events.on(APP_EVENTS.UI_MENU_ACTION, ({ detail }) => {
     const { type, payload } = detail;
     dispatcher({ type, payload, events, root });
   });
