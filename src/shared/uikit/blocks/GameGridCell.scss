@@ -1,0 +1,20 @@
+@use '../theme' as *;
+@use '../core' as *;
+
+/* .game-grid-cell {
+  outline: 1px solid blue;
+  min-width: 20px;
+} */
+
+.game-grid-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border: 1px solid red; // temporary to see all cells clearly */
+  background-color: $color-sf-secondary;
+  color: $color-on-sf-secondary;
+  min-width: rx(50);
+  min-height: rx(50);
+  user-select: none;
+  /* pointer-events: none; */
+}

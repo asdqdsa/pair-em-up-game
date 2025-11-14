@@ -1,0 +1,12 @@
+@use '../theme' as *;
+@use '../core' as *;
+
+/* .game-grid {
+  @include grid($min: 1fr, $gap: rx(2), $mode: 9);
+} */
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  gap: rx(3); // or whatever
+}

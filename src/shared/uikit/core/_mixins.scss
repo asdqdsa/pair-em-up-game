@@ -59,10 +59,10 @@
   gap: rx($gap);
 }
 
-@mixin grid($min, $gap) {
+@mixin grid($min, $gap, $mode: auto-fill) {
   display: grid;
   gap: $gap;
-  grid-template-columns: repeat(auto-fill, minmax($min, 1fr));
+  grid-template-columns: repeat($mode, minmax($min, 1fr));
 }
 
 @mixin list() {
