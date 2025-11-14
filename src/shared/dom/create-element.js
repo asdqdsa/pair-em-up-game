@@ -20,7 +20,7 @@ export function createElement(type, props = {}, ...children) {
   }
 
   for (const child of children.flat(Infinity)) {
-    const isRenderable = child != null && child != false && child != true;
+    const isRenderable = child != null && child !== false && child !== true;
     if (isRenderable) {
       if (child instanceof Node) el.append(child);
       else el.append(document.createTextNode(String(child)));
