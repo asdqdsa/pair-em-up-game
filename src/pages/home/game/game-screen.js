@@ -25,7 +25,9 @@ export function GameGrid({ events }) {
     'div',
     {
       className: 'game-grid',
-      onClick: () => console.log('clicked'),
+      onClick: () => {
+        console.log('clicked');
+      },
     },
 
     grid.map((cell) =>
@@ -47,7 +49,7 @@ export function GameGridCell({ events, onClick = (e) => {}, children }) {
     {
       className: 'game-grid-cell',
       onClick: (e) => {
-        // e.stopPropagation();
+        e.stopPropagation();
         onClick();
       },
     },
