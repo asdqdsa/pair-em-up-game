@@ -1,20 +1,16 @@
 import { GameScreen } from '@/pages/home/game/game-screen';
 import { StartScreen } from '@/pages/home/start/start-screen';
 import { SettingsScreen } from '@/pages/home/settings/SettingsScreen';
-import { render } from '@/shared/dom/render';
+import { render, rerender } from '@/shared/dom/render';
 import { APP_EVENTS } from '@/shared/event/events';
-import { ModalUI } from '@/shared/uikit/components/ModalUI';
+import { UIModal } from '@/shared/uikit/components/UIModal';
 import { StatsScreen } from '@/pages/home/stats/StatsScreen';
 
-const DISPATCHER_TYPES = {
-  MODE: 'mode',
-  SETTINGS: 'settings',
-  CONTINUE: 'continue',
-  STATS: 'stats',
-  BACK_TO_MENU: 'back-to-menu',
-};
+import { appCtx } from './context/context';
+import { Header } from './layout';
+import { ROUTER_ACTIONS, SCREENS } from './screens';
 
-export function initRouter({ events, root }) {
+export function initRouter({ events, root, headerRoot }) {
   render(() => StartScreen({ events }), root);
 
   events.on(APP_EVENTS.LANG_UPDATED, ({ detail }) => {
@@ -23,18 +19,23 @@ export function initRouter({ events, root }) {
 
   events.on(APP_EVENTS.UI_MENU_ACTION, ({ detail }) => {
     const { type, payload } = detail;
-    dispatcher({ type, payload, events, root });
+    dispatcher({ type, payload, events, root, headerRoot });
   });
 }
 
-const dispatcher = ({ type, payload, events, root }) => {
+const dispatcher = ({ type, payload, events, root, headerRoot }) => {
   switch (type) {
-    case DISPATCHER_TYPES.MODE:
+    case ROUTER_ACTIONS.MODE:
+      appCtx.set({ currScreen: SCREENS.GAME });
+      // rerender({ root: headerRoot, nodeFn: Header, props: { events } });
+      // render(() => Header({ events }), headerRoot);
+      render(() => Header({ events }), headerRoot);
       render(() => GameScreen({ events }), root);
       break;
 
-    case DISPATCHER_TYPES.SETTINGS: {
-      const modal = ModalUI({
+    case ROUTER_ACTIONS.SETTINGS: {
+      appCtx.set({ currScreen: SCREENS.SETTINGS });
+      const modal = UIModal({
         onClose: () => root.removeChild(modal),
         children: SettingsScreen({ events }),
       });
@@ -42,11 +43,12 @@ const dispatcher = ({ type, payload, events, root }) => {
       break;
     }
 
-    case DISPATCHER_TYPES.CONTINUE:
+    case ROUTER_ACTIONS.CONTINUE:
       break;
 
-    case DISPATCHER_TYPES.STATS: {
-      const modal = ModalUI({
+    case ROUTER_ACTIONS.STATS: {
+      appCtx.set({ currScreen: SCREENS.STATS });
+      const modal = UIModal({
         onClose: () => root.removeChild(modal),
         children: StatsScreen({ events }),
       });
@@ -54,7 +56,9 @@ const dispatcher = ({ type, payload, events, root }) => {
       break;
     }
 
-    case DISPATCHER_TYPES.BACK_TO_MENU:
+    case ROUTER_ACTIONS.BACK_TO_MENU:
+      appCtx.set({ currScreen: SCREENS.START });
+      rerender({ root: headerRoot, nodeFn: Header, props: { events } });
       render(() => StartScreen({ events }), root);
       break;
 

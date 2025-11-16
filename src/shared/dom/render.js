@@ -13,3 +13,9 @@ export function mount(node, root) {
 export function unmount(root) {
   root.replaceChildren();
 }
+
+export function rerender({ root, nodeFn: node, props = {} }) {
+  const el = node(props);
+  root.replaceChildren(el);
+  return el;
+}

@@ -1,13 +1,20 @@
 import { ThemeButton } from '@/features/theme-switcher';
 import { LanguageButton } from '@/features/lang-switcher';
 import { createElement } from '@/shared/dom/create-element';
+import { render } from '@/shared/dom/render';
 
 import { initRouter } from './router';
+import { appCtx } from './context/context';
 
 export function App({ events }) {
-  const header = Header({ events });
-  const footer = Footer({ events });
+  // const header = Header({ events });
   const main = Main({ events });
+  // const footer = Footer({ events });
+  const headerRoot = createElement('div', {});
+  const footerRoot = createElement('div', {});
+
+  render(() => Header({ events }), headerRoot);
+  render(() => Footer({ events }), footerRoot);
 
   const app = createElement(
     'div',
@@ -15,22 +22,26 @@ export function App({ events }) {
       className: 'flex flex-col flex-1 h-full items-center',
       id: 'app',
     },
-    header,
+    headerRoot,
     main,
-    footer
+    footerRoot
   );
 
-  initRouter({ events, root: main });
+  initRouter({ events, root: main, headerRoot });
   return app;
 }
 
 export function Header({ events }) {
-  return createElement(
+  const { currScreen } = appCtx.get();
+  console.log(currScreen);
+  const el = createElement(
     'header',
     { className: 'header my-10 ty-body w-full gap-2 flex justify-end' },
     ThemeButton({ events, className: 'btn-md' }),
-    LanguageButton({ events, className: 'btn-md' })
+    currScreen !== 'start' && LanguageButton({ events, className: 'btn-md' })
   );
+
+  return el;
 }
 
 export function Main({}) {

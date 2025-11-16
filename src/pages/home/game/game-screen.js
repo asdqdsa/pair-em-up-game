@@ -1,12 +1,9 @@
 import { createElement } from '@/shared/dom/create-element';
 import { APP_EVENTS } from '@/shared/event/events';
+import { GAME_MODES } from '@/features/game/game-modes';
 
 import { GRID_EVENTS } from './constants';
-
-export const getGameGrid = ({ mode = 'classic' }) => {
-  const list = Array.from({ length: 27 }, (_, i) => String(i + 1));
-  return list;
-};
+import { getGameGrid } from './lib';
 
 export function GameScreen({ events }) {
   return createElement(
@@ -20,13 +17,14 @@ export function GameScreen({ events }) {
 }
 
 export function GameGrid({ events }) {
-  const grid = getGameGrid({ mode: 'classic' });
+  const grid = getGameGrid({ mode: GAME_MODES.CHAOTIC });
+  console.log('gird: ', grid);
   const el = createElement(
     'div',
     {
       className: 'game-grid',
       onClick: () => {
-        console.log('clicked');
+        // console.log('clicked');
       },
     },
 
@@ -43,15 +41,12 @@ export function GameGrid({ events }) {
 }
 
 export function GameGridCell({ events, onClick = (e) => {}, children }) {
-  console.log('cell ', children);
+  // console.log('cell ', children);
   const el = createElement(
     'div',
     {
       className: 'game-grid-cell',
-      onClick: (e) => {
-        e.stopPropagation();
-        onClick();
-      },
+      onClick,
     },
     children
   );

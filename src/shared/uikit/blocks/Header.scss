@@ -6,5 +6,5 @@
   /* justify-content: center; */
   min-height: rx(20);
   min-width: 100%;
-  @include flex($direction: row);
+  @include flex($gap: rx(4), $direction: row);
 }

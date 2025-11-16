@@ -1,6 +1,6 @@
 import { createElement } from '@/shared/dom/create-element';
 
-export function ModalUI({ children, className = '', onClose = () => {} }) {
+export function UIModal({ children, className = '', onClose = () => {} }) {
   const el = createElement(
     'div',
     { className: `modal ${className}` },
