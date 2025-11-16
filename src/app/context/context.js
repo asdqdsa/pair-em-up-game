@@ -1,5 +1,6 @@
 let state = {
-  currScreen: 'null',
+  currScreen: null,
+  currMode: null,
   isBackActive: true,
   isLangActive: true,
 };

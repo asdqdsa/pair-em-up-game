@@ -1,24 +1,25 @@
 import { createElement } from '@/shared/dom/create-element';
 import { APP_EVENTS } from '@/shared/event/events';
 import { GAME_MODES } from '@/features/game/game-modes';
+import { appCtx } from '@/app/context/context';
 
 import { GRID_EVENTS } from './constants';
 import { getGameGrid } from './lib';
 
 export function GameScreen({ events }) {
+  const { currMode } = appCtx.get();
   return createElement(
     'div',
     {
       id: 'start-screen',
       className: 'flex flex-col items-center justify-center',
     },
-    GameGrid({ events })
+    GameGrid({ events, mode: currMode })
   );
 }
 
-export function GameGrid({ events }) {
-  const grid = getGameGrid({ mode: GAME_MODES.CHAOTIC });
-  console.log('gird: ', grid);
+export function GameGrid({ events, mode }) {
+  const grid = getGameGrid({ mode: GAME_MODES[mode.toUpperCase()] });
   const el = createElement(
     'div',
     {
