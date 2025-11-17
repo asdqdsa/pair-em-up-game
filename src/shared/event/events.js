@@ -13,6 +13,7 @@ export const APP_EVENTS = {
   GAME_START: 'game:start',
   GAME_END: 'game:end',
   GAME_CONTINUE: 'game:continue',
+  GAME_UPDATED: 'game:updated',
 
   STORAGE_SAVE: 'storage:save',
   STORAGE_LOAD: 'storage:load',

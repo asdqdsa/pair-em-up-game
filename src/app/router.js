@@ -5,7 +5,7 @@ import { render, rerender } from '@/shared/dom/render';
 import { APP_EVENTS } from '@/shared/event/events';
 import { UIModal } from '@/shared/uikit/components/UIModal';
 import { StatsScreen } from '@/pages/home/stats/StatsScreen';
-import { GAME_MODES } from '@/features/game/game-modes';
+import { startNewGame } from '@/features/game/controller';
 
 import { appCtx } from './context/context';
 import { Header } from './layout';
@@ -26,14 +26,16 @@ export function initRouter({ events, root, headerRoot }) {
 
 const dispatcher = ({ type, payload, events, root, headerRoot }) => {
   switch (type) {
-    case ROUTER_ACTIONS.MODE:
+    case ROUTER_ACTIONS.MODE: {
       console.log('MODE', payload);
       appCtx.set({ currScreen: SCREENS.GAME, currMode: payload });
-      // rerender({ root: headerRoot, nodeFn: Header, props: { events } });
-      // render(() => Header({ events }), headerRoot);
+
+      startNewGame({ mode: payload });
+
       render(() => Header({ events }), headerRoot);
       render(() => GameScreen({ events }), root);
       break;
+    }
 
     case ROUTER_ACTIONS.SETTINGS: {
       appCtx.set({ currScreen: SCREENS.SETTINGS });
