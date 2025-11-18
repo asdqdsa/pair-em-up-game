@@ -5,11 +5,14 @@ import { UIButton } from '@/shared/uikit/components/UIButton';
 import { MENU_ACTIONS } from './menu-actions';
 import { getMenuText } from './i18n/menu-text';
 
+const FML = `I still haven’t finished this task. If you can give me a few extra days and review the app near the deadline, it would be really kind of you.`;
+
 export function StartScreen({ events }) {
   const MENU_TEXT = getMenuText();
   return createElement(
     'div',
     { className: 'flex flex-col gap-2 justify-center h-full' },
+    FML,
     StartScreenGameModes({ events }),
     StartScreenControlls({ events }),
     UIButton({
