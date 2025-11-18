@@ -1,53 +1,61 @@
 import { APP_EVENTS } from '@/shared/event/events';
 import { events } from '@/shared/event/event-broker';
+import { sleep } from '@/shared/utils/async/sleep';
 
 import { GRID_EVENTS } from './constants';
 import { generateGameGrid } from './grid/generate';
 import { gameState } from './state';
 
-export function handleCellClick({ payload }) {
+export async function handleCellClick({ payload }) {
+  //  {key: 21, value: '1'}
   const { key, value } = payload;
-  console.log('Cell clicked', key, value);
 
   if (!value) return;
 
-  // if (gameState.firstSelected === null) {
-  //   gameState.firstSelected = key;
-  //   events.emit(APP_EVENTS.GAME_UPDATED, null);
-  //   return;
-  // }
-  //
-  if (gameState.selectedCells.includes(key)) {
-    gameState.selectedCells = [];
-    events.emit(APP_EVENTS.GAME_UPDATED, null);
-    return;
-  }
-
   if (gameState.selectedCells.length === 0) {
     gameState.selectedCells.push(key);
+    console.log('selectedCells2', gameState.selectedCells);
     events.emit(APP_EVENTS.GAME_UPDATED, null);
     return;
   }
 
   if (gameState.selectedCells.length === 1) {
+    const firstCellKey = gameState.selectedCells[0];
+
+    if (firstCellKey == key) {
+      gameState.selectedCells = [];
+      events.emit(APP_EVENTS.GAME_UPDATED, null);
+      return;
+    }
+
     gameState.selectedCells.push(key);
+
+    // repain with seconds cell
     events.emit(APP_EVENTS.GAME_UPDATED, null);
 
-    checkPair(gameState.selectedCells[0], gameState.selectedCells[1]);
+    await sleep(500);
+
+    const isValidPair = checkPair(
+      gameState.selectedCells[0],
+      gameState.selectedCells[1]
+    );
+
+    if (isValidPair) {
+      console.log('PAIR IS VALID', isValidPair);
+    }
+
+    if (!isValidPair) {
+      console.log('PAIR IS WRONG', isValidPair);
+    }
 
     gameState.selectedCells = [];
-
     events.emit(APP_EVENTS.GAME_UPDATED, null);
+
     return;
   }
 
-  // const a = gameState.firstSelected;
-  // const b = key;
-
-  // gameState.firstSelected = null;
-
-  // events.emit(APP_EVENTS.GAME_UPDATED, null);
-  // checkPair(a, b);
+  gameState.selectedCells = [key];
+  events.emit(APP_EVENTS.GAME_UPDATED, null);
 }
 
 function checkPair(a, b) {
@@ -55,6 +63,7 @@ function checkPair(a, b) {
   // TODO: call BFS
   // TODO: update grid
   console.log('Pair checked', a, b);
+  return Math.random() > 0.5;
 }
 
 export function handleGameAction({ type, payload, events }) {

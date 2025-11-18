@@ -47,6 +47,8 @@ export function GameGrid({ events, mode }) {
   // const grid = generateGameGrid({ mode: GAME_MODES[mode.toUpperCase()] });
 
   const grid = gameState.grid;
+
+  console.log('selectedCells3', gameState.selectedCells);
   const el = createElement(
     'div',
     {

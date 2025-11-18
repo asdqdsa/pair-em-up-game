@@ -5,7 +5,7 @@ import { UIButton } from '@/shared/uikit/components/UIButton';
 import { MENU_ACTIONS } from './menu-actions';
 import { getMenuText } from './i18n/menu-text';
 
-const FML = `I still haven’t finished this task. If you can give me a few extra days and review the app near the deadline, it would be really kind of you.`;
+const FML = `I haven failed to finished this task in time. If you can give me a few extra days and review the app near the deadline, I'd appreciate greatly.`;
 
 export function StartScreen({ events }) {
   const MENU_TEXT = getMenuText();
