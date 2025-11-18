@@ -2,15 +2,21 @@ import { APP_EVENTS } from '@/shared/event/events';
 import { events } from '@/shared/event/event-broker';
 import { sleep } from '@/shared/utils/async/sleep';
 
-import { GRID_EVENTS } from './constants';
+import { GAME_STATUS, GRID_EVENTS } from './constants';
 import { generateGameGrid } from './grid/generate';
 import { gameState } from './state';
+import { checkPair } from './utils';
 
 export async function handleCellClick({ payload }) {
+  gameState.status = GAME_STATUS.IN_PROGRESS;
+
   //  {key: 21, value: '1'}
   const { key, value } = payload;
 
-  if (!value) return;
+  if (value === null) {
+    events.emit(APP_EVENTS.GAME_UPDATED, null);
+    return;
+  }
 
   if (gameState.selectedCells.length === 0) {
     gameState.selectedCells.push(key);
@@ -33,23 +39,43 @@ export async function handleCellClick({ payload }) {
     // repain with seconds cell
     events.emit(APP_EVENTS.GAME_UPDATED, null);
 
-    await sleep(500);
+    await sleep(200);
 
-    const isValidPair = checkPair(
+    const pairScore = checkPair(
+      // firstCellKey,
       gameState.selectedCells[0],
-      gameState.selectedCells[1]
+      // key
+      gameState.selectedCells[1],
+      gameState.grid
     );
 
-    if (isValidPair) {
-      console.log('PAIR IS VALID', isValidPair);
+    if (pairScore > 0) {
+      console.log('PAIR IS VALID', pairScore);
+      gameState.score += 10;
+      gameState.movesLeft -= 1;
+      gameState.grid[key] = null;
+      gameState.grid[firstCellKey] = null;
     }
 
-    if (!isValidPair) {
-      console.log('PAIR IS WRONG', isValidPair);
+    if (pairScore === 0) {
+      console.log('PAIR IS WRONG', pairScore);
+      gameState.movesLeft -= 1;
     }
 
     gameState.selectedCells = [];
     events.emit(APP_EVENTS.GAME_UPDATED, null);
+
+    if (winConditionsMet()) {
+      console.log('WIN CONDITIONS MET');
+      gameState.status = GAME_STATUS.WIN;
+      events.emit(APP_EVENTS.GAME_END, null);
+    }
+
+    if (loseConditionsMet()) {
+      console.log('LOSE CONDITIONS MET');
+      gameState.status = GAME_STATUS.LOSS;
+      events.emit(APP_EVENTS.GAME_END, null);
+    }
 
     return;
   }
@@ -58,12 +84,20 @@ export async function handleCellClick({ payload }) {
   events.emit(APP_EVENTS.GAME_UPDATED, null);
 }
 
-function checkPair(a, b) {
-  // TODO: validate match rule
-  // TODO: call BFS
-  // TODO: update grid
-  console.log('Pair checked', a, b);
-  return Math.random() > 0.5;
+export function winConditionsMet() {
+  return gameState.score >= gameState.maxScore;
+}
+
+export function loseConditionsMet() {
+  const list = gameState.grid;
+  for (let i = 0; i < list.length; i += 1) {
+    for (let j = i + 1; j < list.length; j += 1) {
+      if (checkPair(i, j, list)) {
+        return false;
+      }
+    }
+  }
+  return true;
 }
 
 export function handleGameAction({ type, payload, events }) {
@@ -86,5 +120,14 @@ export function startNewGame({ mode }) {
   gameState.mode = mode;
   gameState.score = 0;
   gameState.firstSelected = null;
+  gameState.selectedCells = [];
   console.log('New game started');
+}
+
+export function continueGame({}) {
+  // loadStorage
+}
+
+export function saveGame() {
+  // saveStorage
 }

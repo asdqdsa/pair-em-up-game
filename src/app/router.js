@@ -6,6 +6,8 @@ import { APP_EVENTS } from '@/shared/event/events';
 import { UIModal } from '@/shared/uikit/components/UIModal';
 import { StatsScreen } from '@/pages/home/stats/StatsScreen';
 import { startNewGame } from '@/features/game/controller';
+import { GAME_STATUS } from '@/features/game/constants';
+import { gameState } from '@/features/game/state';
 
 import { appCtx } from './context/context';
 import { Header } from './layout';
@@ -48,6 +50,17 @@ const dispatcher = ({ type, payload, events, root, headerRoot }) => {
     }
 
     case ROUTER_ACTIONS.CONTINUE:
+      appCtx.set({ currScreen: SCREENS.GAME });
+      gameState.status = GAME_STATUS.IN_PROGRESS;
+
+      // continueGame();
+
+      render(() => Header({ events }), headerRoot);
+      rerender({ root, nodeFn: GameScreen, props: { events } });
+
+      events.emit(APP_EVENTS.GAME_UPDATED, null);
+      // events.emit(APP_EVENTS.GAME_CONTINUE, null);
+
       break;
 
     case ROUTER_ACTIONS.STATS: {

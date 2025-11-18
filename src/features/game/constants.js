@@ -3,3 +3,9 @@ export const GRID_EVENTS = {
 };
 
 export const MAX_LEN = 27;
+
+export const GAME_STATUS = {
+  IN_PROGRESS: 'in-progress',
+  WIN: 'win',
+  LOSS: 'loss',
+};

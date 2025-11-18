@@ -1,34 +1,46 @@
 import { appCtx } from '@/app/context/context';
 import { GRID_EVENTS } from '@/features/game/constants';
-import { handleGameAction } from '@/features/game/controller';
+import { handleGameAction, startNewGame } from '@/features/game/controller';
 import { gameState } from '@/features/game/state';
 import { createElement } from '@/shared/dom/create-element';
 import { render, rerender } from '@/shared/dom/render';
 import { APP_EVENTS } from '@/shared/event/events';
+import { UIButton } from '@/shared/uikit/components/UIButton';
+
+let unbindGridAction;
+let unbindGameUpdated;
 
 export function GameScreen({ events }) {
   const gridRoot = createElement('div');
   const { currMode } = appCtx.get();
 
-  events.on(APP_EVENTS.UI_GAME_GRID_ACTION, ({ detail }) => {
+  if (unbindGridAction) unbindGridAction();
+  if (unbindGameUpdated) unbindGameUpdated();
+
+  const handleGridAction = ({ detail }) => {
     const { type, payload } = detail;
     handleGameAction({ type, payload, events });
-  });
+  };
+  events.on(APP_EVENTS.UI_GAME_GRID_ACTION, handleGridAction);
 
-  events.on(APP_EVENTS.GAME_UPDATED, ({ detail }) => {
+  unbindGridAction = () =>
+    events.off(APP_EVENTS.UI_GAME_GRID_ACTION, handleGridAction);
+
+  const handleGameUpdated = () => {
     rerender({
       root: gridRoot,
       nodeFn: GameGrid,
-      props: {
-        events,
-        mode: currMode,
-      },
+      props: { events, mode: currMode },
     });
+  };
 
-    // render(() => GameGrid({ events, mode: currMode }), gridRoot);
-  });
+  events.on(APP_EVENTS.GAME_UPDATED, handleGameUpdated);
+
+  unbindGameUpdated = () =>
+    events.off(APP_EVENTS.GAME_UPDATED, handleGameUpdated);
 
   render(() => GameGrid({ events, mode: currMode }), gridRoot);
+  // render(() => GameGrid({ events, mode: currMode }), gridRoot);
 
   const el = createElement(
     'div',
@@ -37,7 +49,16 @@ export function GameScreen({ events }) {
       className: 'flex flex-col items-center justify-center',
     },
     // GameGrid({ events, mode: currMode })
-    gridRoot
+    gridRoot,
+    UIButton({
+      className: 'btn',
+      onClick: () => {
+        startNewGame({ mode: gameState.mode });
+        events.emit(APP_EVENTS.GAME_RESET, null);
+        events.emit(APP_EVENTS.GAME_UPDATED, null);
+      },
+      children: 'Reset',
+    })
   );
 
   return el;
@@ -48,7 +69,6 @@ export function GameGrid({ events, mode }) {
 
   const grid = gameState.grid;
 
-  console.log('selectedCells3', gameState.selectedCells);
   const el = createElement(
     'div',
     {
@@ -57,7 +77,6 @@ export function GameGrid({ events, mode }) {
         // console.log('clicked');
       },
     },
-
     grid.map((cell, idx) =>
       GameGridCell({
         events,
