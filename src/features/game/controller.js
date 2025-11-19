@@ -102,7 +102,9 @@ export function loseConditionsMet() {
 
   for (let i = 0; i < list.length; i += 1) {
     for (let j = i + 1; j < list.length; j += 1) {
-      if (checkPair(i, j, list)) {
+      const score = checkPair(i, j, list);
+      console.log('pair i, j', i, j, score);
+      if (score > 0) {
         return false;
       }
     }
@@ -133,8 +135,8 @@ export function startNewGame({ mode }) {
   gameState.firstSelected = null;
   gameState.selectedCells = [];
   gameState.status = GAME_STATUS.IN_PROGRESS;
-  gameState.maxScore = 5;
-  gameState.movesLeft = 5;
+  gameState.maxScore = 100;
+  gameState.movesLeft = 50;
 
   gameState.elapsedSeconds = 0;
   if (gameState.timerRef) {
@@ -144,7 +146,7 @@ export function startNewGame({ mode }) {
 
   gameState.timerRef = setInterval(() => {
     gameState.elapsedSeconds += 1;
-    events.emit(APP_EVENTS.GAME_UPDATED, null);
+    // events.emit(APP_EVENTS.GAME_UPDATED, null);
   }, 1000);
 }
 

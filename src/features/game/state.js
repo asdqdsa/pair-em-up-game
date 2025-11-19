@@ -17,13 +17,13 @@ export const gameState = {
   score: 0,
 
   // defeault is ??
-  movesLeft: 5,
+  movesLeft: 50,
 
   // GAME_STATUS
   status: null,
 
   // Default is 100
-  maxScore: 5,
+  maxScore: 100,
 
   // time spent
   elapsedSeconds: 0,

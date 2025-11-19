@@ -57,7 +57,9 @@ export function checkPair(a, b, list) {
   if (a === b) return -1;
 
   const areValidNeighbours = areNeighbours(a, b, list);
-  if (!areValidNeighbours) return -1;
+  if (!areValidNeighbours) return 0;
+
+  if (list[a] === null || list[b] === null) return 0;
 
   const aVal = +list[a];
   const bVal = +list[b];
