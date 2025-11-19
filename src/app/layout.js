@@ -10,8 +10,8 @@ export function App({ events }) {
   // const header = Header({ events });
   const main = Main({ events });
   // const footer = Footer({ events });
-  const headerRoot = createElement('div', {});
-  const footerRoot = createElement('div', {});
+  const headerRoot = createElement('header', { className: 'w-full' });
+  const footerRoot = createElement('footer', {});
 
   render(() => Header({ events }), headerRoot);
   render(() => Footer({ events }), footerRoot);
@@ -35,7 +35,7 @@ export function Header({ events }) {
   const { currScreen } = appCtx.get();
   console.log(currScreen);
   const el = createElement(
-    'header',
+    'div',
     { className: 'header my-10 ty-body w-full gap-2 flex justify-end' },
     ThemeButton({ events, className: 'btn-md' }),
     currScreen !== 'start' && LanguageButton({ events, className: 'btn-md' })
@@ -50,7 +50,7 @@ export function Main({}) {
 
 export function Footer({}) {
   return createElement(
-    'footer',
+    'div',
     { className: 'footer my-4' },
     createElement(
       'a',

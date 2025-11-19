@@ -13,8 +13,10 @@
   /* border: 1px solid red; // temporary to see all cells clearly */
   background-color: $color-sf-secondary;
   color: $color-on-sf-secondary;
-  min-width: rx(50);
-  min-height: rx(50);
+  /* min-width: rx(40); */
+  /* min-height: rx(40); */
+  block-size: clamp(2.5rem, 2.276rem + 0.943vh, 3.125rem);
+  inline-size: clamp(2.5rem, 2.276rem + 0.943vi, 3.125rem);
   user-select: none;
   /* pointer-events: none; */
 }
