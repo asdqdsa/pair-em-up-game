@@ -8,5 +8,6 @@
 .game-grid {
   display: grid;
   grid-template-columns: repeat(9, minmax(0, 1fr));
-  gap: rx(3); // or whatever
+  gap: rx(3);
+  justify-items: center;
 }

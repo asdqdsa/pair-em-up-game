@@ -8,7 +8,9 @@ import { gameState } from './state';
 import { checkPair } from './utils';
 
 export async function handleCellClick({ payload }) {
-  gameState.status = GAME_STATUS.IN_PROGRESS;
+  if (gameState.status !== GAME_STATUS.IN_PROGRESS) return;
+
+  // gameState.status = GAME_STATUS.IN_PROGRESS;
 
   //  {key: 21, value: '1'}
   const { key, value } = payload;
@@ -123,6 +125,7 @@ export function startNewGame({ mode }) {
   gameState.score = 0;
   gameState.firstSelected = null;
   gameState.selectedCells = [];
+  gameState.status = GAME_STATUS.IN_PROGRESS;
   console.log('New game started');
 }
 

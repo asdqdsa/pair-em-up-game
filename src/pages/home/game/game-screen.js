@@ -39,8 +39,7 @@ export function GameScreen({ events }) {
   unbindGameUpdated = () =>
     events.off(APP_EVENTS.GAME_UPDATED, handleGameUpdated);
 
-  render(() => GameGrid({ events, mode: currMode }), gridRoot);
-  // render(() => GameGrid({ events, mode: currMode }), gridRoot);
+  render(() => GameGrid({ events }), gridRoot);
 
   const el = createElement(
     'div',
@@ -64,24 +63,21 @@ export function GameScreen({ events }) {
   return el;
 }
 
-export function GameGrid({ events, mode }) {
-  // const grid = generateGameGrid({ mode: GAME_MODES[mode.toUpperCase()] });
-
+export function GameGrid({ events }) {
   const grid = gameState.grid;
 
-  const el = createElement(
+  const scoreBar = createElement(
     'div',
-    {
-      className: 'game-grid',
-      onClick: () => {
-        // console.log('clicked');
-      },
-    },
+    { className: 'flex items-center justify-center my-20' },
+    `Score: ${gameState.score} / ${gameState.maxScore}`
+  );
+
+  const gameGrid = createElement(
+    'div',
+    { className: 'game-grid' },
     grid.map((cell, idx) =>
       GameGridCell({
-        events,
         key: idx,
-        value: cell,
         onClick: () =>
           events.emit(APP_EVENTS.UI_GAME_GRID_ACTION, {
             type: GRID_EVENTS.UI_CELL_CLICKED,
@@ -94,18 +90,11 @@ export function GameGrid({ events, mode }) {
       })
     )
   );
-  return el;
+
+  return createElement('div', { className: 'game-layout' }, gameGrid, scoreBar);
 }
 
-export function GameGridCell({
-  events,
-  key,
-  value,
-  onClick = () => {},
-  children,
-}) {
-  // console.log('cell ', children);
-
+export function GameGridCell({ key, onClick = () => {}, children }) {
   const isSelected = gameState.selectedCells.includes(key);
 
   const el = createElement(
