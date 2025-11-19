@@ -1,4 +1,4 @@
-import { GAME_MODES } from '@/features/game/game-modes';
+import { GAME_MODES } from '@/features/game/constants';
 
 export const MENU_ACTIONS = {
   TITLE: 'Pair Em Up',
@@ -7,7 +7,12 @@ export const MENU_ACTIONS = {
 
   CONTINUE: {
     label: 'Continue',
-    action: { type: 'continue' },
+    action: { type: 'continue', payload: null },
+  },
+
+  SAVE: {
+    label: 'Save',
+    action: { type: 'save' },
   },
 
   SETTINGS: {

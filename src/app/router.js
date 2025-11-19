@@ -5,9 +5,8 @@ import { render, rerender } from '@/shared/dom/render';
 import { APP_EVENTS } from '@/shared/event/events';
 import { UIModal } from '@/shared/uikit/components/UIModal';
 import { StatsScreen } from '@/pages/home/stats/StatsScreen';
-import { startNewGame } from '@/features/game/controller';
-import { GAME_STATUS } from '@/features/game/constants';
-import { gameState } from '@/features/game/state';
+import { startNewGame } from '@/features/game/controller/start-new-game';
+import { continueGame } from '@/features/game/controller/continue-game';
 
 import { appCtx } from './context/context';
 import { Header } from './layout';
@@ -22,7 +21,7 @@ export function initRouter({ events, root, headerRoot }) {
 
   events.on(APP_EVENTS.UI_MENU_ACTION, ({ detail }) => {
     const { type, payload } = detail;
-    dispatcher({ type, payload, events, root, headerRoot });
+    onMenuActionsDispatcher({ type, payload, events, root, headerRoot });
   });
 
   events.on(APP_EVENTS.GAME_END, () => {
@@ -39,7 +38,13 @@ export function initRouter({ events, root, headerRoot }) {
   });
 }
 
-const dispatcher = ({ type, payload, events, root, headerRoot }) => {
+const onMenuActionsDispatcher = ({
+  type,
+  payload,
+  events,
+  root,
+  headerRoot,
+}) => {
   switch (type) {
     case ROUTER_ACTIONS.MODE: {
       console.log('MODE', payload);
@@ -63,17 +68,13 @@ const dispatcher = ({ type, payload, events, root, headerRoot }) => {
     }
 
     case ROUTER_ACTIONS.CONTINUE:
+      continueGame();
+
       appCtx.set({ currScreen: SCREENS.GAME });
-      gameState.status = GAME_STATUS.IN_PROGRESS;
-
-      // continueGame();
-
       render(() => Header({ events }), headerRoot);
       rerender({ root, nodeFn: GameScreen, props: { events } });
-
-      events.emit(APP_EVENTS.GAME_UPDATED, null);
+      // events.emit(APP_EVENTS.GAME_UPDATED, null);
       // events.emit(APP_EVENTS.GAME_CONTINUE, null);
-
       break;
 
     case ROUTER_ACTIONS.STATS: {
@@ -88,7 +89,6 @@ const dispatcher = ({ type, payload, events, root, headerRoot }) => {
 
     case ROUTER_ACTIONS.BACK_TO_MENU:
       appCtx.set({ currScreen: SCREENS.START });
-      console.log('BACK_TO_MENU');
       rerender({ root: headerRoot, nodeFn: Header, props: { events } });
       render(() => StartScreen({ events }), root);
       break;

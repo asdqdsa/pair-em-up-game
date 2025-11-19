@@ -1,6 +1,7 @@
 import { createElement } from '@/shared/dom/create-element';
 import { APP_EVENTS } from '@/shared/event/events';
 import { UIButton } from '@/shared/uikit/components/UIButton';
+import { loadGameSnapshot } from '@/features/game/storage/storage';
 
 import { MENU_ACTIONS } from './menu-actions';
 import { getMenuText } from './i18n/menu-text';
@@ -57,13 +58,18 @@ export function StartScreenGameModes({ events }) {
 export function StartScreenControlls({ events }) {
   const MENU_TEXT = getMenuText();
 
+  const savedGame = loadGameSnapshot();
+
   const continueBtn = createElement(
     'div',
     {
       'data-key': `mode-${MENU_TEXT.BUTTONS.CONTINUE.toLowerCase()}`,
-      className: 'btn',
+      className: savedGame ? 'btn' : 'btn hidden',
       onClick: () =>
-        events.emit(APP_EVENTS.UI_MENU_ACTION, MENU_ACTIONS.CONTINUE.action),
+        events.emit(APP_EVENTS.UI_MENU_ACTION, {
+          ...MENU_ACTIONS.CONTINUE.action,
+          payload: savedGame,
+        }),
     },
 
     `${MENU_TEXT.BUTTONS.CONTINUE}`

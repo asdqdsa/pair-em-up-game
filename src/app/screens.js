@@ -4,6 +4,7 @@ export const ROUTER_ACTIONS = {
   CONTINUE: 'continue',
   STATS: 'stats',
   BACK_TO_MENU: 'back-to-menu',
+  SAVE: 'save',
 };
 
 export const SCREENS = {

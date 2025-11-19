@@ -1,11 +1,11 @@
-import { APP_EVENTS } from '@/shared/event/events';
 import { events } from '@/shared/event/event-broker';
+import { APP_EVENTS } from '@/shared/event/events';
 import { sleep } from '@/shared/utils/async/sleep';
 
-import { GAME_STATUS, GRID_EVENTS } from './constants';
-import { generateGameGrid } from './grid/generate';
-import { gameState } from './state';
-import { checkPair } from './utils';
+import { GAME_STATUS } from '../constants';
+import { checkPair } from '../lib/grid-utils';
+import { gameState } from '../state/runtimeState';
+import { loseConditionsMet, winConditionsMet } from './win-lose-condition';
 
 export async function handleCellClick({ payload }) {
   if (gameState.status !== GAME_STATUS.IN_PROGRESS) return;
@@ -55,14 +55,14 @@ export async function handleCellClick({ payload }) {
       console.log('PAIR IS VALID', pairScore);
       gameState.score += pairScore != null || pairScore > 0 ? pairScore : 0;
 
-      gameState.movesLeft -= 1;
+      gameState.movesCount += 1;
       gameState.grid[key] = null;
       gameState.grid[firstCellKey] = null;
     }
 
     if (pairScore === 0) {
       console.log('PAIR IS WRONG', pairScore);
-      gameState.movesLeft -= 1;
+      gameState.movesCount += 1;
     }
 
     gameState.selectedCells = [];
@@ -87,73 +87,4 @@ export async function handleCellClick({ payload }) {
 
   gameState.selectedCells = [key];
   events.emit(APP_EVENTS.GAME_UPDATED, null);
-}
-
-export function winConditionsMet() {
-  return gameState.score >= gameState.maxScore;
-}
-
-export function loseConditionsMet() {
-  const list = gameState.grid;
-
-  if (gameState.movesLeft <= 0) {
-    return true;
-  }
-
-  for (let i = 0; i < list.length; i += 1) {
-    for (let j = i + 1; j < list.length; j += 1) {
-      const score = checkPair(i, j, list);
-      console.log('pair i, j', i, j, score);
-      if (score > 0) {
-        return false;
-      }
-    }
-  }
-  // TODO add 50 row/line limit
-  return true;
-}
-
-export function handleGameAction({ type, payload, events }) {
-  console.log('Game action', type, payload);
-
-  switch (type) {
-    case GRID_EVENTS.UI_CELL_CLICKED: {
-      handleCellClick({ payload });
-      break;
-    }
-
-    default:
-      console.log(`Unhandled action type: ${type}`);
-      break;
-  }
-}
-
-export function startNewGame({ mode }) {
-  gameState.grid = generateGameGrid({ mode });
-  gameState.mode = mode;
-  gameState.score = 0;
-  gameState.firstSelected = null;
-  gameState.selectedCells = [];
-  gameState.status = GAME_STATUS.IN_PROGRESS;
-  gameState.maxScore = 100;
-  gameState.movesLeft = 50;
-
-  gameState.elapsedSeconds = 0;
-  if (gameState.timerRef) {
-    clearInterval(gameState.timerRef);
-    gameState.timerRef = null;
-  }
-
-  gameState.timerRef = setInterval(() => {
-    gameState.elapsedSeconds += 1;
-    // events.emit(APP_EVENTS.GAME_UPDATED, null);
-  }, 1000);
-}
-
-export function continueGame({}) {
-  // loadStorage
-}
-
-export function saveGame() {
-  // saveStorage
 }

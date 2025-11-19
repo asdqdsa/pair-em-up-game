@@ -4,6 +4,7 @@ import { createElement } from '@/shared/dom/create-element';
 import { render } from '@/shared/dom/render';
 import { UIButton } from '@/shared/uikit/components/UIButton';
 import { APP_EVENTS } from '@/shared/event/events';
+import { MENU_ACTIONS } from '@/pages/home/start/menu-actions';
 
 import { initRouter } from './router';
 import { appCtx } from './context/context';
@@ -45,10 +46,10 @@ export function Header({ events }) {
     UIButton({
       className: 'btn-md',
       onClick: () => {
-        events.emit(APP_EVENTS.UI_MENU_ACTION, {
-          type: ROUTER_ACTIONS.BACK_TO_MENU,
-          payload: { screen: 'start' },
-        });
+        events.emit(
+          APP_EVENTS.UI_MENU_ACTION,
+          MENU_ACTIONS.BACK_TO_MENU.action
+        );
       },
       children: 'Back',
     })

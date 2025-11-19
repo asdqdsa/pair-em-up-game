@@ -1,7 +1,9 @@
 import { appCtx } from '@/app/context/context';
 import { GRID_EVENTS } from '@/features/game/constants';
-import { handleGameAction, startNewGame } from '@/features/game/controller';
-import { gameState } from '@/features/game/state';
+import { handleGameAction } from '@/features/game/controller';
+import { saveGame } from '@/features/game/controller/save-game';
+import { startNewGame } from '@/features/game/controller/start-new-game';
+import { gameState } from '@/features/game/state/runtimeState';
 import { createElement } from '@/shared/dom/create-element';
 import { render, rerender } from '@/shared/dom/render';
 import { APP_EVENTS } from '@/shared/event/events';
@@ -46,7 +48,7 @@ export function GameScreen({ events }) {
     'div',
     {
       id: 'start-screen',
-      className: 'flex flex-col items-center justify-center',
+      className: 'flex flex-col items-center gap-2 justify-center',
     },
     // GameGrid({ events, mode: currMode })
     gridRoot,
@@ -58,6 +60,14 @@ export function GameScreen({ events }) {
         events.emit(APP_EVENTS.GAME_UPDATED, null);
       },
       children: 'Reset',
+    }),
+    UIButton({
+      className: 'btn',
+      onClick: () => {
+        saveGame();
+        events.emit(APP_EVENTS.GAME_UPDATED, null);
+      },
+      children: 'Save',
     })
   );
 

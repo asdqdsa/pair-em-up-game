@@ -2,8 +2,8 @@ import { createElement } from '@/shared/dom/create-element';
 import { UIButton } from '@/shared/uikit/components/UIButton';
 import { APP_EVENTS } from '@/shared/event/events';
 import { GAME_STATUS } from '@/features/game/constants';
-import { gameState } from '@/features/game/state';
 import { formatTime } from '@/shared/utils/lib';
+import { gameState } from '@/features/game/state/runtimeState';
 
 import { MENU_ACTIONS } from '../start/menu-actions';
 

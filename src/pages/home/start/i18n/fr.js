@@ -1,4 +1,4 @@
-import { GAME_MODES } from '@/features/game/game-modes';
+import { GAME_MODES } from '@/features/game/constants';
 
 export const MENU_TEXT = {
   TITLE: 'Fais des paires',
