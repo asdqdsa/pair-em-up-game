@@ -6,6 +6,7 @@ import { createElement } from '@/shared/dom/create-element';
 import { render, rerender } from '@/shared/dom/render';
 import { APP_EVENTS } from '@/shared/event/events';
 import { UIButton } from '@/shared/uikit/components/UIButton';
+import { formatTime } from '@/shared/utils/lib';
 
 let unbindGridAction;
 let unbindGameUpdated;
@@ -68,8 +69,13 @@ export function GameGrid({ events }) {
 
   const scoreBar = createElement(
     'div',
-    { className: 'flex items-center justify-center my-20' },
-    `Score: ${gameState.score} / ${gameState.maxScore}`
+    { className: 'flex flex-col gap-3 items-center justify-center my-20' },
+    `Score: ${gameState.score} / ${gameState.maxScore}`,
+    createElement(
+      'div',
+      { className: 'timer' },
+      `Time: ${formatTime(gameState.elapsedSeconds)}`
+    )
   );
 
   const gameGrid = createElement(

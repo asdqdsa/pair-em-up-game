@@ -71,12 +71,14 @@ export async function handleCellClick({ payload }) {
     if (winConditionsMet()) {
       console.log('WIN CONDITIONS MET');
       gameState.status = GAME_STATUS.WIN;
+      clearInterval(gameState.timerRef);
       events.emit(APP_EVENTS.GAME_END, null);
     }
 
     if (loseConditionsMet()) {
       console.log('LOSE CONDITIONS MET');
       gameState.status = GAME_STATUS.LOSS;
+      clearInterval(gameState.timerRef);
       events.emit(APP_EVENTS.GAME_END, null);
     }
 
@@ -131,7 +133,19 @@ export function startNewGame({ mode }) {
   gameState.firstSelected = null;
   gameState.selectedCells = [];
   gameState.status = GAME_STATUS.IN_PROGRESS;
-  console.log('New game started');
+  gameState.maxScore = 5;
+  gameState.movesLeft = 5;
+
+  gameState.elapsedSeconds = 0;
+  if (gameState.timerRef) {
+    clearInterval(gameState.timerRef);
+    gameState.timerRef = null;
+  }
+
+  gameState.timerRef = setInterval(() => {
+    gameState.elapsedSeconds += 1;
+    events.emit(APP_EVENTS.GAME_UPDATED, null);
+  }, 1000);
 }
 
 export function continueGame({}) {

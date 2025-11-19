@@ -3,6 +3,7 @@ import { UIButton } from '@/shared/uikit/components/UIButton';
 import { APP_EVENTS } from '@/shared/event/events';
 import { GAME_STATUS } from '@/features/game/constants';
 import { gameState } from '@/features/game/state';
+import { formatTime } from '@/shared/utils/lib';
 
 import { MENU_ACTIONS } from '../start/menu-actions';
 
@@ -30,7 +31,9 @@ export function StatsScreen({ events }) {
       createElement(
         'p',
         {},
-        `Your score: ${gameState.score} / ${gameState.maxScore}`
+        `Your score: ${gameState.score} / ${gameState.maxScore}`,
+        ` `,
+        `Time: ${formatTime(gameState.elapsedSeconds)}`
       )
     )
   );
