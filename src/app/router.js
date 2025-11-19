@@ -31,7 +31,7 @@ export function initRouter({ events, root, headerRoot }) {
     // render(() => StatsScreen({ events }), root);
 
     const modal = UIModal({
-      onClose: () => root.remocveChild(modal),
+      onClose: () => root.removeChild(modal),
       children: StatsScreen({ events }),
     });
 
