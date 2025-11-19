@@ -24,6 +24,19 @@ export function initRouter({ events, root, headerRoot }) {
     const { type, payload } = detail;
     dispatcher({ type, payload, events, root, headerRoot });
   });
+
+  events.on(APP_EVENTS.GAME_END, () => {
+    appCtx.set({ currScreen: SCREENS.STATS });
+
+    // render(() => StatsScreen({ events }), root);
+
+    const modal = UIModal({
+      onClose: () => root.remocveChild(modal),
+      children: StatsScreen({ events }),
+    });
+
+    root.append(modal);
+  });
 }
 
 const dispatcher = ({ type, payload, events, root, headerRoot }) => {

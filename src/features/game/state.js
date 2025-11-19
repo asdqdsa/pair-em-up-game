@@ -11,7 +11,7 @@ export const gameState = {
   selectedCells: [],
   // game overall score
   score: 0,
-  movesLeft: 3,
+  movesLeft: 5,
   status: null,
-  maxScore: 100,
+  maxScore: 2,
 };
