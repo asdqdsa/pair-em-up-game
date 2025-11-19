@@ -51,7 +51,8 @@ export async function handleCellClick({ payload }) {
 
     if (pairScore > 0) {
       console.log('PAIR IS VALID', pairScore);
-      gameState.score += 10;
+      gameState.score += pairScore != null || pairScore > 0 ? pairScore : 0;
+
       gameState.movesLeft -= 1;
       gameState.grid[key] = null;
       gameState.grid[firstCellKey] = null;
@@ -97,6 +98,7 @@ export function loseConditionsMet() {
       }
     }
   }
+  // TODO add 50 row/line limit
   return true;
 }
 
