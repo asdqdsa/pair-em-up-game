@@ -75,6 +75,7 @@ const dispatcher = ({ type, payload, events, root, headerRoot }) => {
 
     case ROUTER_ACTIONS.BACK_TO_MENU:
       appCtx.set({ currScreen: SCREENS.START });
+      console.log('BACK_TO_MENU');
       rerender({ root: headerRoot, nodeFn: Header, props: { events } });
       render(() => StartScreen({ events }), root);
       break;
