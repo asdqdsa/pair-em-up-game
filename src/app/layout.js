@@ -8,7 +8,7 @@ import { MENU_ACTIONS } from '@/pages/home/start/menu-actions';
 
 import { initRouter } from './router';
 import { appCtx } from './context/context';
-import { ROUTER_ACTIONS } from './screens';
+import { ROUTER_ACTIONS, SCREENS } from './screens';
 
 export function App({ events }) {
   // const header = Header({ events });
@@ -37,22 +37,28 @@ export function App({ events }) {
 
 export function Header({ events }) {
   const { currScreen } = appCtx.get();
+  console.log('Header', currScreen);
+
+  const isStart = currScreen === SCREENS.START || currScreen === null;
 
   const el = createElement(
     'div',
     { className: 'header my-10 ty-body w-full gap-2 flex justify-end' },
     ThemeButton({ events, className: 'btn-md' }),
-    // currScreen !== 'start' && LanguageButton({ events, className: 'btn-md' })
-    UIButton({
-      className: 'btn-md',
-      onClick: () => {
-        events.emit(
-          APP_EVENTS.UI_MENU_ACTION,
-          MENU_ACTIONS.BACK_TO_MENU.action
-        );
-      },
-      children: 'Back',
-    })
+    isStart && LanguageButton({ events, className: 'btn-md' }),
+    !isStart &&
+      UIButton({
+        // disabled: isStart,
+        // className: `${isStart ? 'btn-md disabled' : 'btn-md'}`,
+        className: 'btn-md',
+        onClick: () => {
+          events.emit(
+            APP_EVENTS.UI_MENU_ACTION,
+            MENU_ACTIONS.BACK_TO_MENU.action
+          );
+        },
+        children: 'Back',
+      })
   );
 
   return el;

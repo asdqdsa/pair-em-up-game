@@ -5,20 +5,26 @@ export function UIButton({
   id = null,
   title = '',
   className = '',
-  onClick = () => {},
+  onClick = null,
   children = '',
+  disabled = false,
 }) {
-  const el = createElement(
-    'button',
-    {
-      'data-key': key,
-      id,
-      className: `${className}`,
-      title,
-      onClick,
-    },
-    children
-  );
+  const props = {
+    'data-key': key,
+    id,
+    className: `${className}`,
+    title,
+  };
+
+  if (!disabled && typeof onClick === 'function') {
+    props.onClick = onClick;
+  }
+
+  if (disabled) {
+    props.disabled = true;
+  }
+
+  const el = createElement('button', props, children);
 
   return el;
 }

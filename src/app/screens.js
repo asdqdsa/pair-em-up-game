@@ -10,6 +10,6 @@ export const ROUTER_ACTIONS = {
 export const SCREENS = {
   GAME: 'game',
   SETTINGS: 'settings',
-  START: 'START',
+  START: 'start',
   STATS: 'stats',
 };

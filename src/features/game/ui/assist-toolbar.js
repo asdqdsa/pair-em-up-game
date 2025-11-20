@@ -28,8 +28,8 @@ export function AssistToolbar({ events, mode }) {
         events.emit(APP_EVENTS.UI_GAME_ACTION, {
           type: GAME_ACTIONS.ASSIST_HINT,
         }),
-      children: `Hints left (${gameState.hintsLeft})
-         Possible connections ${gameState.avaliablePairs === 0 ? '?' : gameState.avaliablePairs}`,
+      children: `Hints left:${gameState.hintsLeft} |
+         Possible connections ${gameState.avaliablePairs === 0 || gameState.hintsLeft === 0 ? '?' : gameState.avaliablePairs}`,
     }),
 
     UIButton({
