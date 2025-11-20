@@ -5,9 +5,11 @@
   @include grid($min: 1fr, $gap: rx(2), $mode: 9);
 } */
 
+$game-grid-cell-size: clamp(0.063rem, 0rem + 0.278vi, 0.25rem);
+
 .game-grid {
   display: grid;
   grid-template-columns: repeat(9, minmax(0, 1fr));
-  gap: rx(3);
+  gap: $game-grid-cell-size;
   justify-items: center;
 }

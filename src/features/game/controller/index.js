@@ -3,7 +3,7 @@ import { gameState } from '../state/runtimeState';
 import { handleCellClick } from './handle-cell-click';
 import { addNumbers, startNewGame } from './start-new-game';
 
-export function handleGameAction({ type, payload }) {
+export function onGameActionDispatcher({ type, payload }) {
   console.log('Game action', type, payload);
 
   switch (type) {
