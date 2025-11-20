@@ -30,11 +30,11 @@ export function AssistToolbar({ events, mode }) {
         }),
       // children: `Hints left:${gameState.hintsLeft} |
       //    Possible connections ${gameState.avaliablePairs === 0 || gameState.hintsLeft === 0 ? '?' : gameState.avaliablePairs}`,
-      children: `Hint (${gameState.hintsLeft}) · ${
+      children: `Hint(${gameState.hintsLeft}) · ${
         gameState.hintsLeft === 0
-          ? '?'
+          ? ''
           : gameState.avaliablePairs === 0
-            ? '?'
+            ? ''
             : gameState.avaliablePairs > 5
               ? '5+'
               : gameState.avaliablePairs
@@ -56,7 +56,7 @@ export function AssistToolbar({ events, mode }) {
         events.emit(APP_EVENTS.UI_GAME_ACTION, {
           type: GAME_ACTIONS.ASSIST_SHUFFLE,
         }),
-      children: `Shuffle: ${gameState.shufflesLeft}`,
+      children: `Shuffle(${gameState.shufflesLeft})`,
     }),
 
     UIButton({
@@ -65,7 +65,7 @@ export function AssistToolbar({ events, mode }) {
         events.emit(APP_EVENTS.UI_GAME_ACTION, {
           type: GAME_ACTIONS.ASSIST_ERASE,
         }),
-      children: `Erase: ${gameState.eraseCellLeft}`,
+      children: `Erase(${gameState.eraseCellLeft})`,
     })
   );
 

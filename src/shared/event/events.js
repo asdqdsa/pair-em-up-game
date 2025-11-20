@@ -14,6 +14,7 @@ export const APP_EVENTS = {
   GAME_END: 'game:end',
   GAME_CONTINUE: 'game:continue',
   GAME_UPDATED: 'game:updated',
+  GAME_TICK: 'game:tick',
 
   STORAGE_SAVE: 'storage:save',
   STORAGE_LOAD: 'storage:load',

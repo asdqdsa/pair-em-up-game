@@ -20,8 +20,16 @@ export function startNewGame({ mode }) {
     gameState.timerRef = null;
   }
 
+  gameState.elapsedSeconds = 0;
+
   gameState.timerRef = setInterval(() => {
     gameState.elapsedSeconds += 1;
-    events.emit(APP_EVENTS.GAME_UPDATED, null);
+
+    events.emit(APP_EVENTS.GAME_TICK, {
+      type: APP_EVENTS.GAME_TICK,
+      payload: gameState.elapsedSeconds,
+    });
   }, 1000);
+
+  events.emit(APP_EVENTS.GAME_UPDATED, null);
 }

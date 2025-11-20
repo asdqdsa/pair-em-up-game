@@ -8,7 +8,8 @@ import { createElement } from '@/shared/dom/create-element';
 import { render, rerender } from '@/shared/dom/render';
 import { APP_EVENTS } from '@/shared/event/events';
 import { UIButton } from '@/shared/uikit/components/UIButton';
-import { formatTime } from '@/shared/utils/lib';
+
+import { GameGrid } from './game-grid';
 
 let unbindGridAction;
 let unbindGameUpdated;
@@ -17,6 +18,7 @@ export function GameScreen({ events }) {
   const gridRoot = createElement('div');
   const assistsRoot = createElement('div');
   const { currMode } = appCtx.get();
+  const mode = currMode ?? gameState.mode;
 
   if (unbindGridAction) unbindGridAction();
   if (unbindGameUpdated) unbindGameUpdated();
@@ -34,10 +36,10 @@ export function GameScreen({ events }) {
     rerender({
       root: gridRoot,
       nodeFn: GameGrid,
-      props: { events, mode: currMode },
+      props: { events, mode },
     });
 
-    render(() => AssistToolbar({ events, mode: currMode }), assistsRoot);
+    render(() => AssistToolbar({ events, mode }), assistsRoot);
   };
 
   events.on(APP_EVENTS.GAME_UPDATED, handleGameUpdated);
@@ -46,12 +48,12 @@ export function GameScreen({ events }) {
     events.off(APP_EVENTS.GAME_UPDATED, handleGameUpdated);
 
   render(() => GameGrid({ events }), gridRoot);
-  render(() => AssistToolbar({ events, mode: currMode }), assistsRoot);
+  render(() => AssistToolbar({ events, mode }), assistsRoot);
 
   const modeBadge = createElement(
     'div',
     { className: 'game-mode-badge ty-body-sm' },
-    `${currMode.toUpperCase()}`
+    `${mode?.toUpperCase()}`
   );
 
   const el = createElement(
@@ -88,57 +90,6 @@ export function GameScreen({ events }) {
       },
       children: 'Reset',
     })
-  );
-
-  return el;
-}
-
-export function GameGrid({ events }) {
-  const grid = gameState.grid;
-
-  const scoreBar = createElement(
-    'div',
-    { className: 'flex flex-col gap-3 items-center justify-center my-20' },
-    `Score: ${gameState.score} / ${gameState.maxScore}`,
-    createElement(
-      'div',
-      { className: 'timer' },
-      `Time: ${formatTime(gameState.elapsedSeconds)}`
-    )
-  );
-
-  const gameGrid = createElement(
-    'div',
-    { className: 'game-grid' },
-    grid.map((cell, idx) =>
-      GameGridCell({
-        key: idx,
-        onClick: () =>
-          events.emit(APP_EVENTS.UI_GAME_ACTION, {
-            type: GAME_ACTIONS.CELL_CLICKED,
-            payload: {
-              key: idx,
-              value: cell,
-            },
-          }),
-        children: cell,
-      })
-    )
-  );
-
-  return createElement('div', { className: 'game-layout' }, gameGrid, scoreBar);
-}
-
-export function GameGridCell({ key, onClick = () => {}, children }) {
-  const isSelected = gameState.selectedCells.includes(key);
-
-  const el = createElement(
-    'div',
-    {
-      className: `game-grid-cell pointer ${isSelected ? 'border' : ''}`,
-      onClick,
-    },
-    children === null ? '' : children
   );
 
   return el;
