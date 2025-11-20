@@ -90,6 +90,11 @@
   user-select: none;
 }
 
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .overflow-hidden {
   overflow: hidden;
 }

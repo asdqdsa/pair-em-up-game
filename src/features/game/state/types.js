@@ -35,6 +35,8 @@
  *  erase cell left
  * @property {number} revertMovesLeft
  *
+ * @property {number} avaliablePairs
+ * Hint for avaliable Pairs
  */
 
 export {};

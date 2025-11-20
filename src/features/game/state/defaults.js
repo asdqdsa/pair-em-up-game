@@ -28,4 +28,6 @@ export const DEFAULT_STATE = () => ({
   shufflesLeft: 5,
   eraseCellLeft: 5,
   revertMovesLeft: 1,
+
+  avaliablePairs: 0,
 });

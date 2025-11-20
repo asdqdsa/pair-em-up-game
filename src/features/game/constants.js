@@ -1,7 +1,12 @@
 export const GAME_ACTIONS = {
   CELL_CLICKED: 'cell-clicked',
-  ADD_NUMBERS: 'add-numbers',
   GAME_START: 'game-start',
+
+  ASSIST_ADD_NUMBERS: 'assist:add-numbers',
+  ASSIST_HINT: 'assist:hint',
+  ASSIST_UNDO: 'assist:undo',
+  ASSIST_SHUFFLE: 'assist:shuffle',
+  ASSIST_ERASE: 'assist:erase',
 };
 
 export const ROW_LEN = 9;

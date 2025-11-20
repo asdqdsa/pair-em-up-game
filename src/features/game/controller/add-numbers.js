@@ -1,7 +1,7 @@
 import { GAME_MODES, GRID_LIMIT, GAME_STATUS, ROW_LEN } from '../constants';
 import { gameState } from '../state/runtimeState';
 
-export function addNumbers({ mode }) {
+export function assistAddNumbers({ mode }) {
   if (mode === GAME_MODES.CHAOTIC) {
     const aliveCells = gameState.grid.filter((cell) => cell != null).length;
 

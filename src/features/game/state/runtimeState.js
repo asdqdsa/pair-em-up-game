@@ -24,6 +24,8 @@ export const gameState = {
   shufflesLeft: 0,
   eraseCellLeft: 0,
   revertMovesLeft: 1,
+
+  avaliablePairs: 0,
 };
 
 // function initGameState() {

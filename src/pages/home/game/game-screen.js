@@ -3,6 +3,7 @@ import { GAME_ACTIONS } from '@/features/game/constants';
 import { onGameActionDispatcher } from '@/features/game/controller';
 import { saveGame } from '@/features/game/controller/save-game';
 import { gameState } from '@/features/game/state/runtimeState';
+import { AssistToolbar } from '@/features/game/ui/assist-toolbar';
 import { createElement } from '@/shared/dom/create-element';
 import { render, rerender } from '@/shared/dom/render';
 import { APP_EVENTS } from '@/shared/event/events';
@@ -14,6 +15,7 @@ let unbindGameUpdated;
 
 export function GameScreen({ events }) {
   const gridRoot = createElement('div');
+  const assistsRoot = createElement('div');
   const { currMode } = appCtx.get();
 
   if (unbindGridAction) unbindGridAction();
@@ -34,6 +36,8 @@ export function GameScreen({ events }) {
       nodeFn: GameGrid,
       props: { events, mode: currMode },
     });
+
+    render(() => AssistToolbar({ events, mode: currMode }), assistsRoot);
   };
 
   events.on(APP_EVENTS.GAME_UPDATED, handleGameUpdated);
@@ -42,6 +46,7 @@ export function GameScreen({ events }) {
     events.off(APP_EVENTS.GAME_UPDATED, handleGameUpdated);
 
   render(() => GameGrid({ events }), gridRoot);
+  render(() => AssistToolbar({ events, mode: currMode }), assistsRoot);
 
   const el = createElement(
     'div',
@@ -51,18 +56,8 @@ export function GameScreen({ events }) {
     },
     // GameGrid({ events, mode: currMode })
     gridRoot,
-    UIButton({
-      className: 'btn',
-      onClick: () => {
-        events.emit(APP_EVENTS.UI_GAME_ACTION, {
-          type: GAME_ACTIONS.ADD_NUMBERS,
-          payload: currMode,
-        });
-        events.emit(APP_EVENTS.GAME_UPDATED, null);
-      },
-      children: 'Add numbers',
-    }),
-
+    assistsRoot,
+    // AssistToolbar({ events, mode: currMode }),
     UIButton({
       className: 'btn',
       onClick: () => {

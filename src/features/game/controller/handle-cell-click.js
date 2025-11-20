@@ -41,7 +41,7 @@ export async function handleCellClick({ payload }) {
     // repain with seconds cell
     events.emit(APP_EVENTS.GAME_UPDATED, null);
 
-    await sleep(200);
+    // await sleep(200);
 
     const pairScore = checkPair(
       // firstCellKey,
