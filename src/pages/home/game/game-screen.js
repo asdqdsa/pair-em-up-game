@@ -1,8 +1,7 @@
 import { appCtx } from '@/app/context/context';
 import { GAME_ACTIONS } from '@/features/game/constants';
-import { handleGameAction as onGameActionDispatcher } from '@/features/game/controller';
+import { onGameActionDispatcher } from '@/features/game/controller';
 import { saveGame } from '@/features/game/controller/save-game';
-import { startNewGame } from '@/features/game/controller/start-new-game';
 import { gameState } from '@/features/game/state/runtimeState';
 import { createElement } from '@/shared/dom/create-element';
 import { render, rerender } from '@/shared/dom/render';
@@ -22,7 +21,7 @@ export function GameScreen({ events }) {
 
   const handleGameAction = ({ detail }) => {
     const { type, payload } = detail;
-    onGameActionDispatcher({ type, payload, events });
+    onGameActionDispatcher({ type, payload });
   };
   events.on(APP_EVENTS.UI_GAME_ACTION, handleGameAction);
 
@@ -57,7 +56,7 @@ export function GameScreen({ events }) {
       onClick: () => {
         events.emit(APP_EVENTS.UI_GAME_ACTION, {
           type: GAME_ACTIONS.ADD_NUMBERS,
-          payload: null,
+          payload: currMode,
         });
         events.emit(APP_EVENTS.GAME_UPDATED, null);
       },

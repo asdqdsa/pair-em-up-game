@@ -4,7 +4,7 @@ import {
   GAME_MODES,
   GRID_WIDTH,
   MAX_CONSECUTIVE_NUMS,
-  MAX_LEN,
+  GRID_LIMIT,
 } from '../constants';
 
 export function indexToPos(index) {
@@ -83,18 +83,18 @@ export const generateGameGrid = ({ mode = 'classic' }) => {
 
   const grid = {
     [GAME_MODES.CLASSIC]: () => {
-      for (let i = 0, j = 0; i < MAX_LEN; i += 1, j += 1) {
+      for (let i = 0, j = 0; i < GRID_LIMIT; i += 1, j += 1) {
         if (j === MAX_CONSECUTIVE_NUMS) j = 0;
         str += j + 1;
       }
       return str
         .split('')
         .filter((char, idx, arr) => arr[idx + 1] !== '0' && char !== '0')
-        .slice(0, MAX_LEN);
+        .slice(0, GRID_LIMIT);
     },
 
     [GAME_MODES.RANDOM]: () => {
-      for (let i = 0, j = 0; i < MAX_LEN; i += 1, j += 1) {
+      for (let i = 0, j = 0; i < GRID_LIMIT; i += 1, j += 1) {
         if (j === MAX_CONSECUTIVE_NUMS) j = 0;
         str += j + 1;
       }
@@ -102,18 +102,18 @@ export const generateGameGrid = ({ mode = 'classic' }) => {
         str
           .split('')
           .filter((char, idx, arr) => arr[idx + 1] !== '0' && char !== '0')
-          .slice(0, MAX_LEN)
+          .slice(0, GRID_LIMIT)
       );
     },
 
     [GAME_MODES.CHAOTIC]: () => {
-      while (str.length < MAX_LEN) str += Math.floor(Math.random() * 9) + 1;
+      while (str.length < GRID_LIMIT) str += Math.floor(Math.random() * 9) + 1;
 
       return shuffleArray(
         str
           .split('')
           .filter((char, idx, arr) => arr[idx + 1] !== '0' && char !== '0')
-          .slice(0, MAX_LEN)
+          .slice(0, GRID_LIMIT)
       );
     },
   };

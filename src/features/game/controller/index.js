@@ -1,7 +1,8 @@
 import { GAME_ACTIONS } from '../constants';
 import { gameState } from '../state/runtimeState';
+import { addNumbers } from './add-numbers';
 import { handleCellClick } from './handle-cell-click';
-import { addNumbers, startNewGame } from './start-new-game';
+import { startNewGame } from './start-new-game';
 
 export function onGameActionDispatcher({ type, payload }) {
   console.log('Game action', type, payload);
@@ -13,7 +14,7 @@ export function onGameActionDispatcher({ type, payload }) {
     }
 
     case GAME_ACTIONS.ADD_NUMBERS: {
-      addNumbers();
+      addNumbers({ mode: payload });
       break;
     }
 
