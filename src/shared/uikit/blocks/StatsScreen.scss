@@ -1,0 +1,12 @@
+@use '../theme' as *;
+@use '../core' as *;
+
+.stats-screen__content {
+  @include flex($gap: 12, $direction: column);
+  align-items: center;
+  padding: rx(16);
+  margin: rx(16);
+  background-color: $color-sf-primary;
+  color: $color-on-sf-primary;
+  border-radius: rx(8);
+}

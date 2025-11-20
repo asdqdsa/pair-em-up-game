@@ -12,4 +12,19 @@ $game-grid-cell-size: clamp(0.063rem, 0rem + 0.278vi, 0.25rem);
   grid-template-columns: repeat(9, minmax(0, 1fr));
   gap: $game-grid-cell-size;
   justify-items: center;
+  inline-size: 100%;
+  margin-inline: auto;
+}
+
+.game-screen {
+  @include flex($gap: 16, $direction: column);
+  align-items: center;
+  justify-content: center;
+  inline-size: 100%;
+  padding: rx(16);
+}
+
+.game-controls-bar {
+  @include flex($gap: 8, $direction: row);
+  justify-content: center;
 }

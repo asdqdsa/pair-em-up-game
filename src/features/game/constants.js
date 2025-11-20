@@ -10,7 +10,7 @@ export const GAME_ACTIONS = {
 };
 
 export const ROW_LEN = 9;
-export const MAX_ROWS = 10;
+export const MAX_ROWS = 50;
 export const GRID_LIMIT = ROW_LEN * MAX_ROWS;
 export const MAX_CONSECUTIVE_NUMS = 19;
 

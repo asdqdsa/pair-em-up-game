@@ -48,6 +48,12 @@ export function GameScreen({ events }) {
   render(() => GameGrid({ events }), gridRoot);
   render(() => AssistToolbar({ events, mode: currMode }), assistsRoot);
 
+  const modeBadge = createElement(
+    'div',
+    { className: 'game-mode-badge ty-body-sm' },
+    `${currMode.toUpperCase()}`
+  );
+
   const el = createElement(
     'div',
     {
@@ -55,6 +61,7 @@ export function GameScreen({ events }) {
       className: 'flex flex-col items-center gap-2 justify-center',
     },
     // GameGrid({ events, mode: currMode })
+    modeBadge,
     gridRoot,
     assistsRoot,
     // AssistToolbar({ events, mode: currMode }),

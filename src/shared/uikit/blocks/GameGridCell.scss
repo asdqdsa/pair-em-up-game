@@ -19,4 +19,10 @@
   inline-size: clamp(2.3rem, 2.276rem + 0.943vi, 3.125rem);
   user-select: none;
   /* pointer-events: none; */
+
+  &.border {
+    color: $color-on-primary;
+    box-shadow: 0 0 0 rx(2) $color-border-hover-primary;
+    /* transform: scale(1.03); */
+  }
 }

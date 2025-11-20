@@ -10,19 +10,29 @@ const FML = `I haven failed to finished this task in time. If you can give me a 
 
 export function StartScreen({ events }) {
   const MENU_TEXT = getMenuText();
+
+  const savedGame = loadGameSnapshot();
   return createElement(
     'div',
     { className: 'flex flex-col gap-2 justify-center h-full' },
-    FML,
+    // FML,
     StartScreenGameModes({ events }),
     StartScreenControlls({ events }),
-    UIButton({
-      key: `btn-${MENU_TEXT.BUTTONS.STATS.toLowerCase()}`,
-      className: 'btn flex flex-col items-center justify-center',
-      onClick: () =>
-        events.emit(APP_EVENTS.UI_MENU_ACTION, MENU_ACTIONS.STATS.action),
-      children: MENU_TEXT.BUTTONS.STATS,
-    })
+    savedGame &&
+      createElement(
+        'div',
+        {
+          'data-key': `mode-${MENU_TEXT.BUTTONS.CONTINUE.toLowerCase()}`,
+          className: savedGame ? 'btn' : 'btn hidden',
+          onClick: () =>
+            events.emit(APP_EVENTS.UI_MENU_ACTION, {
+              ...MENU_ACTIONS.CONTINUE.action,
+              payload: savedGame,
+            }),
+        },
+
+        `${MENU_TEXT.BUTTONS.CONTINUE}`
+      )
   );
 }
 
@@ -58,22 +68,6 @@ export function StartScreenGameModes({ events }) {
 export function StartScreenControlls({ events }) {
   const MENU_TEXT = getMenuText();
 
-  const savedGame = loadGameSnapshot();
-
-  const continueBtn = createElement(
-    'div',
-    {
-      'data-key': `mode-${MENU_TEXT.BUTTONS.CONTINUE.toLowerCase()}`,
-      className: savedGame ? 'btn' : 'btn hidden',
-      onClick: () =>
-        events.emit(APP_EVENTS.UI_MENU_ACTION, {
-          ...MENU_ACTIONS.CONTINUE.action,
-          payload: savedGame,
-        }),
-    },
-
-    `${MENU_TEXT.BUTTONS.CONTINUE}`
-  );
   const settingsBtn = createElement(
     'div',
     {
@@ -86,11 +80,20 @@ export function StartScreenControlls({ events }) {
     `${MENU_TEXT.BUTTONS.SETTINGS}`
   );
 
+  const results = UIButton({
+    key: `btn-${MENU_TEXT.BUTTONS.STATS.toLowerCase()}`,
+    className: 'btn flex flex-col items-center justify-center',
+    onClick: () =>
+      events.emit(APP_EVENTS.UI_MENU_ACTION, MENU_ACTIONS.STATS.action),
+    children: MENU_TEXT.BUTTONS.STATS,
+  });
+
   const el = createElement(
     'div',
     { className: 'flex flex-row justify-end gap-2 mt-30' },
-    true && continueBtn,
-    settingsBtn
+    settingsBtn,
+    results
+    // continueBtn
   );
 
   return el;

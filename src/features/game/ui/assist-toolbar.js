@@ -8,10 +8,10 @@ import { gameState } from '../state/runtimeState';
 export function AssistToolbar({ events, mode }) {
   const el = createElement(
     'div',
-    { className: 'flex flex-col gap-2 w-full' },
+    { className: 'flex flex-col gap-2 w-full mb-20' },
 
     UIButton({
-      className: 'btn',
+      className: 'btn-lg',
       onClick: () => {
         events.emit(APP_EVENTS.UI_GAME_ACTION, {
           type: GAME_ACTIONS.ASSIST_ADD_NUMBERS,
@@ -28,8 +28,17 @@ export function AssistToolbar({ events, mode }) {
         events.emit(APP_EVENTS.UI_GAME_ACTION, {
           type: GAME_ACTIONS.ASSIST_HINT,
         }),
-      children: `Hints left:${gameState.hintsLeft} |
-         Possible connections ${gameState.avaliablePairs === 0 || gameState.hintsLeft === 0 ? '?' : gameState.avaliablePairs}`,
+      // children: `Hints left:${gameState.hintsLeft} |
+      //    Possible connections ${gameState.avaliablePairs === 0 || gameState.hintsLeft === 0 ? '?' : gameState.avaliablePairs}`,
+      children: `Hint (${gameState.hintsLeft}) · ${
+        gameState.hintsLeft === 0
+          ? '?'
+          : gameState.avaliablePairs === 0
+            ? '?'
+            : gameState.avaliablePairs > 5
+              ? '5+'
+              : gameState.avaliablePairs
+      }`,
     }),
 
     UIButton({
@@ -47,7 +56,7 @@ export function AssistToolbar({ events, mode }) {
         events.emit(APP_EVENTS.UI_GAME_ACTION, {
           type: GAME_ACTIONS.ASSIST_SHUFFLE,
         }),
-      children: `Shuffle (${gameState.shufflesLeft})`,
+      children: `Shuffle: ${gameState.shufflesLeft}`,
     }),
 
     UIButton({
@@ -56,7 +65,7 @@ export function AssistToolbar({ events, mode }) {
         events.emit(APP_EVENTS.UI_GAME_ACTION, {
           type: GAME_ACTIONS.ASSIST_ERASE,
         }),
-      children: `Erase (${gameState.eraseCellLeft})`,
+      children: `Erase: ${gameState.eraseCellLeft}`,
     })
   );
 
