@@ -8,7 +8,7 @@ export const APP_EVENTS = {
   UI_GAME_STATS: 'ui:game-stats',
   UI_BACK_TO_MENU: 'ui:back-to-menu',
 
-  UI_GAME_GRID_ACTION: 'ui:game-grid-action',
+  UI_GAME_ACTION: 'ui:game-action',
 
   GAME_START: 'game:start',
   GAME_END: 'game:end',

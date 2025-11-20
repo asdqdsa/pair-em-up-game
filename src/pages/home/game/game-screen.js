@@ -1,6 +1,6 @@
 import { appCtx } from '@/app/context/context';
-import { GRID_EVENTS } from '@/features/game/constants';
-import { handleGameAction } from '@/features/game/controller';
+import { GAME_ACTIONS } from '@/features/game/constants';
+import { handleGameAction as onGameActionDispatcher } from '@/features/game/controller';
 import { saveGame } from '@/features/game/controller/save-game';
 import { startNewGame } from '@/features/game/controller/start-new-game';
 import { gameState } from '@/features/game/state/runtimeState';
@@ -20,14 +20,14 @@ export function GameScreen({ events }) {
   if (unbindGridAction) unbindGridAction();
   if (unbindGameUpdated) unbindGameUpdated();
 
-  const handleGridAction = ({ detail }) => {
+  const handleGameAction = ({ detail }) => {
     const { type, payload } = detail;
-    handleGameAction({ type, payload, events });
+    onGameActionDispatcher({ type, payload, events });
   };
-  events.on(APP_EVENTS.UI_GAME_GRID_ACTION, handleGridAction);
+  events.on(APP_EVENTS.UI_GAME_ACTION, handleGameAction);
 
   unbindGridAction = () =>
-    events.off(APP_EVENTS.UI_GAME_GRID_ACTION, handleGridAction);
+    events.off(APP_EVENTS.UI_GAME_ACTION, handleGameAction);
 
   const handleGameUpdated = () => {
     rerender({
@@ -55,12 +55,15 @@ export function GameScreen({ events }) {
     UIButton({
       className: 'btn',
       onClick: () => {
-        startNewGame({ mode: gameState.mode });
-        events.emit(APP_EVENTS.GAME_RESET, null);
+        events.emit(APP_EVENTS.UI_GAME_ACTION, {
+          type: GAME_ACTIONS.ADD_NUMBERS,
+          payload: null,
+        });
         events.emit(APP_EVENTS.GAME_UPDATED, null);
       },
-      children: 'Reset',
+      children: 'Add numbers',
     }),
+
     UIButton({
       className: 'btn',
       onClick: () => {
@@ -68,6 +71,21 @@ export function GameScreen({ events }) {
         events.emit(APP_EVENTS.GAME_UPDATED, null);
       },
       children: 'Save',
+    }),
+
+    UIButton({
+      className: 'btn',
+      onClick: () => {
+        // startNewGame({ mode: gameState.mode });
+
+        events.emit(APP_EVENTS.UI_GAME_ACTION, {
+          type: GAME_ACTIONS.GAME_START,
+          payload: gameState.mode,
+        });
+        events.emit(APP_EVENTS.GAME_RESET, null);
+        events.emit(APP_EVENTS.GAME_UPDATED, null);
+      },
+      children: 'Reset',
     })
   );
 
@@ -95,8 +113,8 @@ export function GameGrid({ events }) {
       GameGridCell({
         key: idx,
         onClick: () =>
-          events.emit(APP_EVENTS.UI_GAME_GRID_ACTION, {
-            type: GRID_EVENTS.UI_CELL_CLICKED,
+          events.emit(APP_EVENTS.UI_GAME_ACTION, {
+            type: GAME_ACTIONS.CELL_CLICKED,
             payload: {
               key: idx,
               value: cell,

@@ -5,6 +5,8 @@ import { GAME_STATUS } from '../constants';
  */
 export const DEFAULT_STATE = () => ({
   grid: [],
+  fullGrid: [],
+  visibleLength: 0,
   mode: null,
 
   selectedCells: [],

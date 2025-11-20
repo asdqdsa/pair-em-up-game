@@ -1,9 +1,16 @@
-export const GRID_EVENTS = {
-  UI_CELL_CLICKED: 'cell-clicked',
+export const GAME_ACTIONS = {
+  CELL_CLICKED: 'cell-clicked',
+  ADD_NUMBERS: 'add-numbers',
+  GAME_START: 'game-start',
 };
 
-export const MAX_LEN = 27;
-export const MAX_ROWS = 50;
+export const ROW_LEN = 9;
+export const MAX_ROWS = 10;
+export const MAX_LEN = ROW_LEN * MAX_ROWS;
+export const MAX_CONSECUTIVE_NUMS = 19;
+
+export const INITIAL_ROWS_COUNTS = 3;
+export const INITIAL_GRID_LENGTH = INITIAL_ROWS_COUNTS * ROW_LEN;
 
 export const GAME_STATUS = {
   IN_PROGRESS: 'in-progress',
@@ -19,3 +26,4 @@ export const GAME_MODES = {
   CHAOTIC: 'chaotic',
   ZEN: 'zen',
 };
+export const GRID_WIDTH = 9;

@@ -5,6 +5,8 @@
 /** @type GameState */
 export const gameState = {
   grid: [],
+  fullGrid: [],
+  visibleLength: 0,
   mode: null,
   selectedCells: [],
   score: 0,

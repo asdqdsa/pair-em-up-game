@@ -1,5 +1,5 @@
-import { MAX_LEN, MAX_ROWS } from '../constants';
-import { arePairsPresent } from '../lib/grid-utils';
+import { MAX_ROWS, ROW_LEN } from '../constants';
+import { arePairsPresent } from './are-pairs-present';
 import { gameState } from '../state/runtimeState';
 
 export function winConditionsMet() {
@@ -19,8 +19,8 @@ export function loseConditionsMet() {
     gameState.revertMovesLeft <= 0;
 
   const gridLimitReached =
-    Math.ceil(gameState.grid.length / MAX_LEN) >= MAX_ROWS;
+    Math.ceil(gameState.grid.length / ROW_LEN) >= MAX_ROWS;
 
   // TODO add 50 row/line limit
-  return (noPairsExist && noAssistsExist) || gridLimitReached;
+  return noPairsExist && noAssistsExist && gridLimitReached;
 }

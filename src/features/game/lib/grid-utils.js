@@ -1,8 +1,11 @@
 import { shuffleArray } from '@/shared/utils/lib';
 
-import { GAME_MODES, MAX_LEN } from '../constants';
-
-const GRID_WIDTH = 9;
+import {
+  GAME_MODES,
+  GRID_WIDTH,
+  MAX_CONSECUTIVE_NUMS,
+  MAX_LEN,
+} from '../constants';
 
 export function indexToPos(index) {
   const row = Math.floor(index / GRID_WIDTH);
@@ -75,27 +78,15 @@ export function checkPair(a, b, list) {
   return 0;
 }
 
-export function arePairsPresent({ list }) {
-  // const list = gameState.grid;
-
-  for (let i = 0; i < list.length; i += 1) {
-    for (let j = i + 1; j < list.length; j += 1) {
-      const score = checkPair(i, j, list);
-      console.log('pair i, j', i, j, score);
-      if (score > 0) {
-        return true;
-      }
-    }
-  }
-  return false;
-}
-
 export const generateGameGrid = ({ mode = 'classic' }) => {
   let str = '';
 
   const grid = {
     [GAME_MODES.CLASSIC]: () => {
-      for (let i = 0; i < MAX_LEN; i += 1) str += i + 1;
+      for (let i = 0, j = 0; i < MAX_LEN; i += 1, j += 1) {
+        if (j === MAX_CONSECUTIVE_NUMS) j = 0;
+        str += j + 1;
+      }
       return str
         .split('')
         .filter((char, idx, arr) => arr[idx + 1] !== '0' && char !== '0')
@@ -103,7 +94,10 @@ export const generateGameGrid = ({ mode = 'classic' }) => {
     },
 
     [GAME_MODES.RANDOM]: () => {
-      for (let i = 0; i < MAX_LEN; i += 1) str += i + 1;
+      for (let i = 0, j = 0; i < MAX_LEN; i += 1, j += 1) {
+        if (j === MAX_CONSECUTIVE_NUMS) j = 0;
+        str += j + 1;
+      }
       return shuffleArray(
         str
           .split('')

@@ -5,14 +5,14 @@ import { sleep } from '@/shared/utils/async/sleep';
 import { GAME_STATUS } from '../constants';
 import { checkPair } from '../lib/grid-utils';
 import { gameState } from '../state/runtimeState';
-import { loseConditionsMet, winConditionsMet } from './win-lose-condition';
+import {
+  loseConditionsMet,
+  winConditionsMet,
+} from '../logic/win-lose-condition';
 
 export async function handleCellClick({ payload }) {
   if (gameState.status !== GAME_STATUS.IN_PROGRESS) return;
 
-  // gameState.status = GAME_STATUS.IN_PROGRESS;
-
-  //  {key: 21, value: '1'}
   const { key, value } = payload;
 
   if (value === null) {
